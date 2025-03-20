@@ -22,3 +22,7 @@ Chevstrap is a Roblox launcher for Android, inspired by [Bloxstrap](https://gith
 #### Q: Can I get banned for using Chevstrap?
 
 A: No, it shouldn't. Chevstrap doesn't interact with the Roblox client
+
+#### Q: Can you add Discord Rich Presence
+
+A: It was planned from the beginning, but was canceled for safety reasons.
