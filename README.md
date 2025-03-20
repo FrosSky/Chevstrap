@@ -8,7 +8,6 @@ Chevstrap is a Roblox launcher for Android, inspired by [Bloxstrap](https://gith
 
 ## Features
 
-- Integrates with Discord to showcase in-game status
 - Customize game assets such as images, sounds, and more
 - Adjust specific FFlags for testing and optimization
 
