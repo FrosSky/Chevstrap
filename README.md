@@ -8,6 +8,8 @@
 
 </div>
 
+##
+
 > [!CAUTION]
 > The only official places to download Chevstrap is this GitHub repository. Any other websites offering downloads or claiming to be us are not controlled by us.
 
