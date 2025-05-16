@@ -1,14 +1,16 @@
 <div align="center">
-  
+
 ![image](https://github.com/user-attachments/assets/a341e7a1-b7ae-46cf-ae21-f377b71a53ea)
 ![image](https://github.com/user-attachments/assets/ab1bfa21-ee3c-49cb-b6cb-c7b4bc5c7d8b)
 
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/FrosSky/Chevstrap/total)
 ![GitHub License](https://img.shields.io/github/license/FrosSky/Chevstrap)
+![GitHub Tag](https://img.shields.io/github/v/tag/FrosSky/Chevstrap)
+![Discord](https://img.shields.io/discord/1351674799411302531)
+
+----
 
 </div>
-
-##
 
 > [!CAUTION]
 > The only official places to download Chevstrap is this GitHub repository. Any other websites offering downloads or claiming to be us are not controlled by us.
