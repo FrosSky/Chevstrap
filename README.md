@@ -45,3 +45,6 @@ A: It was planned from the beginning, but was canceled for safety reasons
 
 #### Q: Where to join discord server?
 A: Here's [Discord Server](https://discord.gg/rWkJ6Uh46U), but it may expired
+
+#### Q: "Roblox logs folder not found"
+A: That's mean no notification appear
