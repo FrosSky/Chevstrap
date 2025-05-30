@@ -31,6 +31,9 @@ Chevstrap is a Roblox & Roblox VN launcher for Android, inspired by [Bloxstrap](
 2. Install the APK on your Android device.
 3. Once installed, open Chevstrap and begin using it.
 
+## Requirement
+- Clone App (make sure it's trusted)
+
 ## F.A.Q
 
 #### Q: Is this a malware?
