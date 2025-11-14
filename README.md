@@ -66,8 +66,6 @@ A: No. As long as you're only running the native Roblox client from an official 
 #### Q: Can you add Discord Rich Presence?
 
 A: No. There is no official Discord RPC client for Android. There are some unofficial ones, but they’re risky and won’t be included.
-#### Q: "Roblox logs folder not found"
-A: That means no notification appeared.
 
 
 
