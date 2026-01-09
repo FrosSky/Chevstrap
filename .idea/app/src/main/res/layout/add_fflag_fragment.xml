@@ -1,0 +1,193 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:id="@+id/linear1"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="#101010"
+		android:orientation="vertical">
+
+		<ScrollView
+			android:id="@+id/vscroll5"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+
+			<LinearLayout
+				android:id="@+id/linear10"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="vertical">
+				<LinearLayout
+					android:id="@+id/linear100"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="vertical">
+					<LinearLayout
+						android:id="@+id/linear_container_title"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:padding="10dp"
+						android:gravity="start"
+						android:orientation="horizontal" >
+						<TextView
+							android:id="@+id/textview_title"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:text="@string/dialog_add_fflag_title"
+							android:textSize="11sp"
+							android:layout_marginEnd="10dp"
+							android:textColor="#E0E0E0" />
+					</LinearLayout>
+					<LinearLayout
+						android:id="@+id/linear11"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:paddingStart="15dp"
+						android:paddingEnd="15dp"
+						android:paddingBottom="5dp"
+						android:orientation="vertical">
+						<LinearLayout
+							android:id="@+id/linear_top_main_tabs"
+							android:layout_width="match_parent"
+							android:layout_height="wrap_content"
+							android:padding="0dp"
+							android:gravity="center"
+							android:orientation="horizontal" >
+						</LinearLayout>
+						<LinearLayout
+							android:id="@+id/container_for_tabs"
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:gravity="center"
+							android:background="#151515"
+							android:padding="0dp"
+							android:orientation="vertical" />
+
+						<LinearLayout
+							android:id="@+id/container_normal"
+							android:layout_width="match_parent"
+							android:layout_height="150dp"
+							android:layout_marginBottom="10dp"
+							android:background="#151515"
+							android:gravity="center"
+							android:orientation="vertical"
+							android:padding="10dp">
+
+							<LinearLayout
+								android:id="@+id/container_addsingle"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:gravity="center"
+								android:orientation="vertical">
+
+								<LinearLayout
+									android:id="@+id/linear_center_name"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:gravity="center"
+									android:orientation="horizontal"
+									android:padding="7dp">
+
+									<TextView
+										android:id="@+id/textview_name"
+										android:layout_width="0dp"
+										android:layout_height="wrap_content"
+										android:layout_weight="1"
+										android:gravity="start"
+										android:text="@string/common_name"
+										android:textColor="#E0E0E0"
+										android:textSize="11sp" />
+
+									<LinearLayout
+										android:id="@+id/linear_center_list1"
+										android:layout_width="235dp"
+										android:layout_height="wrap_content"
+										android:gravity="center"
+										android:orientation="horizontal"
+										android:padding="8dp" />
+								</LinearLayout>
+
+								<LinearLayout
+									android:id="@+id/linear_center_value"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:gravity="center"
+									android:orientation="horizontal"
+									android:padding="7dp">
+
+									<TextView
+										android:id="@+id/textview_value"
+										android:layout_width="0dp"
+										android:layout_height="wrap_content"
+										android:layout_weight="1"
+										android:text="@string/common_value"
+										android:textColor="#E0E0E0"
+										android:textSize="11sp" />
+
+									<LinearLayout
+										android:id="@+id/linear_center_list2"
+										android:layout_width="235dp"
+										android:layout_height="wrap_content"
+										android:gravity="center"
+										android:orientation="horizontal"
+										android:padding="8dp" />
+								</LinearLayout>
+							</LinearLayout>
+
+							<LinearLayout
+								android:id="@+id/container_importjson"
+								android:layout_width="match_parent"
+								android:layout_height="wrap_content"
+								android:gravity="center"
+								android:orientation="vertical">
+
+								<LinearLayout
+									android:id="@+id/linear_center_importjson"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:gravity="center"
+									android:orientation="horizontal">
+
+									<LinearLayout
+										android:id="@+id/linear_center_list_importjson"
+										android:layout_width="0dp"
+										android:layout_height="wrap_content"
+										android:layout_weight="1"
+										android:gravity="center"
+										android:orientation="horizontal"
+										android:padding="8dp" />
+								</LinearLayout>
+
+								<LinearLayout
+									android:id="@+id/linear_bottom_importjson"
+									android:layout_width="match_parent"
+									android:layout_height="wrap_content"
+									android:gravity="center"
+									android:orientation="horizontal"
+									android:padding="3dp"></LinearLayout>
+							</LinearLayout>
+						</LinearLayout>
+					</LinearLayout>
+					<HorizontalScrollView
+						android:id="@+id/linear_bottom_main"
+						android:layout_width="match_parent"
+						android:layout_height="wrap_content"
+						android:gravity="center"
+						android:fillViewport="true"
+						android:orientation="horizontal" >
+						<LinearLayout
+							android:id="@+id/linear_bottom_list"
+							android:layout_width="wrap_content"
+							android:layout_height="wrap_content"
+							android:padding="15dp"
+							android:gravity="center"
+							android:orientation="horizontal" />
+					</HorizontalScrollView>
+				</LinearLayout>
+			</LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+</LinearLayout>

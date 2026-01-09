@@ -1,0 +1,76 @@
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:id="@+id/linear_background"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:background="@drawable/background_loading"
+		android:gravity="bottom"
+		android:orientation="horizontal"
+		android:padding="8dp">
+
+		<LinearLayout
+			android:id="@+id/linear2"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:background="#CC101010"
+			android:gravity="center_vertical"
+			android:orientation="horizontal"
+			android:padding="15dp">
+
+			<ImageView
+				android:id="@+id/imageview_logo"
+				android:layout_width="40dp"
+				android:layout_height="40dp"
+				android:layout_marginStart="5dp"
+				android:layout_marginEnd="10dp"
+				android:background="@drawable/chevstrap_logo"
+				android:scaleType="center"
+				android:src="@drawable/nothing80" />
+
+			<LinearLayout
+				android:id="@+id/linear4"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:background="@android:color/transparent"
+				android:gravity="start"
+				android:orientation="vertical"
+				android:padding="2dp">
+
+				<TextView
+					android:id="@+id/textview_taskcurrently"
+					android:layout_width="150dp"
+					android:layout_height="wrap_content"
+					android:padding="2dp"
+					android:text=""
+					android:textColor="#FFFFFF"
+					android:textSize="13sp"
+					android:textStyle="bold" />
+
+				<TextView
+					android:id="@+id/textview_loadingstatus"
+					android:layout_width="150dp"
+					android:layout_height="wrap_content"
+					android:padding="2dp"
+					android:text=""
+					android:textColor="#F5F5F5"
+					android:textSize="11sp" />
+			</LinearLayout>
+
+			<LinearLayout
+				android:id="@+id/linear5"
+				android:layout_width="0dp"
+				android:layout_height="wrap_content"
+				android:gravity="end"
+				android:layout_weight="1"
+				android:orientation="horizontal"
+				android:padding="0dp" />
+		</LinearLayout>
+	</LinearLayout>
+</LinearLayout>

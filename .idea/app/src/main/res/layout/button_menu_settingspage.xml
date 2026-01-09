@@ -1,0 +1,40 @@
+ <LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<LinearLayout
+		android:id="@+id/button_option"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginBottom="5dp"
+		android:background="@android:color/transparent"
+		android:gravity="center|center_vertical"
+		android:orientation="vertical"
+		android:paddingTop="15dp"
+		android:paddingBottom="15dp">
+
+		<ImageView
+
+			android:id="@+id/imageview"
+			android:layout_width="25dp"
+			android:layout_height="25dp"
+			android:background="@drawable/integrations"
+			android:clickable="false"
+			android:focusable="false"
+			android:scaleType="center"
+			android:src="@drawable/nothing80" />
+
+		<TextView
+			android:id="@+id/textview_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:clickable="false"
+			android:focusable="false"
+			android:padding="1dp"
+			android:text=""
+			android:textColor="#FFFFFF"
+			android:textSize="12sp" />
+	</LinearLayout>
+</LinearLayout>

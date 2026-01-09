@@ -1,0 +1,17 @@
+name: Feature Request
+title: "[REQ] "
+description: Suggest a feature that should be added
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### **Preliminary instructions**
+        - Please do not suggest any ideas that are intended to violate the Roblox Terms of Service.
+        - Please first check to see if your idea has already been suggested. You can check by [searching all previous issues](https://github.com/frossky/chevstrap/issues?q=is%3Aissue).
+        - If your feature suggestion is to do with Roblox itself, please consider that what's possible is heavily constrained by what [FastFlags](https://github.com/FrosSky/Chevstrap/wiki/Fast-Flags-Guide-for-Android) are available.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What's your idea?
+    validations:
+      required: true

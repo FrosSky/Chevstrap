@@ -1,0 +1,66 @@
+name: Bug Report
+title: "[BUG] "
+description: Report a problem you're experiencing with Chevstrap.
+body:
+  - type: markdown
+    attributes:
+      value: |
+        > [!IMPORTANT]
+        > Do **NOT** open an issue if you're getting a "No root access" or fallback-related error. Learn more [here](https://github.com/FrosSky/Chevstrap/wiki/No-root-access).
+        > Always use the latest version, downloadable [here](https://github.com/FrosSky/Chevstrap/releases/latest).
+
+        ### Preliminary Instructions
+        - Before opening an issue, please [check the Wiki](https://github.com/FrosSky/Chevstrap/wiki/) to see if your problem has already been addressed.
+          - If it has **not**, mention which Wiki pages you read that seemed relevant.
+          - Issues **will be closed without warning** if a Wiki page already addresses your problem. We try to check everything, but we might not be able to respond to or close every single issue.
+        - If your issue involves **Roblox crashing or not launching**, [check this guide](https://github.com/FrosSky/Chevstrap/wiki/Roblox-Crash-&-Launch-Issues-(Android)).
+          - Only report the issue **if it only occurs with Chevstrap**, and clearly state that.
+        - Ensure you're using the **latest version** of Chevstrap. Reports based on outdated versions will not be supported.
+        
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Acknowledgement of Preliminary Instructions
+      options:
+        - label: I have read the preliminary instructions and confirm that my issue is not already covered.
+          required: true
+        - label: I have searched the Wiki thoroughly and could not find a solution.
+          required: true
+        - label: I am using the latest version of Chevstrap.
+          required: true
+        - label: I did not answer truthfully to all the above checkboxes.
+
+  - type: input
+    id: version
+    attributes:
+      label: Chevstrap Version
+      description: What version of Chevstrap are you currently using?
+      placeholder: "v..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What problem did you encounter?
+      description: Describe the issue in detail. Include screenshots, logs, or exception messages if available.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro-steps
+    attributes:
+      label: Steps to Reproduce
+      description: Provide step-by-step instructions to reproduce the issue. Include any FastFlag or settings changes you made.
+      placeholder: |
+        1. Open Chevstrap
+        2. Navigate to '...'
+        3. Tap '...'
+        4. Issue appears
+
+  - type: input
+    id: clone-app
+    attributes:
+      label: Are you running chevstrap with virtual app?
+      description: If you're running Chevstrap inside a virtual app, write "No".
+      placeholder: "N/A"

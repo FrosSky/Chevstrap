@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="bootstrapper_status_applying_modifications">Applying changes to Roblox…</string>
+    <string name="bootstrapper_status_cleaning_caches_on_roblox">Cleaning caches on Roblox…</string>
+    <string name="bootstrapper_status_connecting">Connecting to Roblox…</string>
+    <string name="bootstrapper_status_starting_roblox">Starting Roblox</string>
+    <string name="bootstrapper_status_upgrading_chevstrap">Opening Chevstrap’s latest version page…</string>
+
+    <string name="dialog_player_error_help_information">For information about why this could be happening and how this can be resolved, learn more:\n</string>
+    <string name="dialog_cheater_warning">Third-party modifications can interfere with Roblox. If you’re using a modified version of Roblox for exploits or reverse engineering, please uninstall it to ensure you’re not running a modified client, and get the native Roblox app from an official source such as Google Play.</string>
+    <string name="dialog_chevstrap_ask_permission">Chevstrap will request for permission. Would you like to show the permission request?</string>
+    <string name="dialog_failed_to_apply_changes">An issue occurred while applying changes to Roblox \n\nMore information:</string>
+    <string name="dialog_failed_to_launch">An issue occurred while launching Roblox \n\nMore information:</string>
+    <string name="dialog_ask_this_feature_uses_activity_tracking">This feature uses activity tracking to function properly.</string>
+    <string name="dialog_failed_to_importfile">An issue occurred while importing the file \n\nMore information:</string>
+    <string name="dialog_not_installed">Roblox may not be installed yet. Please install it before launching.</string>
+    <string name="dialog_delete_all_fflags_warning">Are you sure you want to delete all flags?</string>
+    <string name="dialog_unsaved_changes">You have unsaved changes. Are you sure you want to close without saving?</string>
+    <string name="dialog_access_to_roblox_directories_is_blocked">Access to Roblox directories is blocked due to Android restrictions. Please run Chevstrap inside a virtual app environment that supports shared directory access, and review its privacy policy before use. \n\nLearn more here:</string>
+    <string name="dialog_device_full_storage">Your device doesn’t have enough storage to run Chevstrap properly. Try clearing some space to continue.</string>
+    <string name="dialog_flag_not_found_for_deletion">Cannot find the selected flag to delete.</string>
+    <string name="dialog_flag_not_any_found_for_deletion">No single flag found. failed to delete all.</string>
+
+    <string name="dialog_gamehistory_title">Experience History</string>
+    <string name="dialog_gamehistory_description">Experience history is recorded for your current Roblox session. New entries are added when you leave between experiences. These entries are temporary, as they are stored in memory. Some servers may also become unavailable to rejoin.</string>
+    <string name="dialog_gamehistory_rejoin">Rejoin</string>
+
+    <string name="dialog_add_fflag_title">Add FFlag</string>
+    <string name="dialog_edit_fflag_title">Edit FFlag</string>
+
+    <string name="notification_connected_to_a_server">Connected to a server</string>
+    <string name="notification_server_location_failed">Server location could not be determined</string>
+    <string name="notification_server_location_success">Server location:</string>
+
+    <string name="backups_backup_name">Backup name</string>
+    <string name="backups_load_selected_backup">Load selected backup</string>
+    <string name="backups_save_backup">Save backup</string>
+    <string name="backups_delete_selected_backup">Delete selected backup</string>
+
+    <string name="about_title">About</string>
+    <string name="about_description">Information about Chevstrap.</string>
+    <string name="about_licenses_title">Licences</string>
+    <string name="about_section_contributors_title">Contributors</string>
+    <string name="about_code_and_uidesign_title">Code and UI design</string>
+    <string name="about_github_repository_title">GitHub repository</string>
+    <string name="about_discord_server_title">Discord server</string>
+    <string name="about_help_and_information">Help and information</string>
+    <string name="about_report_an_issue_or_feature_request_title">Report an issue or feature request</string>
+    <string name="about_proofreader_title">Proofreader</string>
+    <string name="about_section_special_thanks_title">Special thanks</string>
+    <string name="about_translator_title">Translator</string>
+    <string name="about_bloxstrap_contributors">Bloxstrap’s contributors</string>
+    <string name="about_bloxstrap_contributors_desc_title">Chevstrap was inspired by Bloxstrap.</string>
+    <string name="about_roblox_client_tracker_contributors">Roblox Client Tracker contributors</string>
+    <string name="about_roblox_client_tracker_contributors_desc_title">Chevstrap used part of Roblox Client Tracker for flag validators.</string>
+    <string name="about_feature_ideas_title">Feature ideas</string>
+    <string name="about_license_mit">MIT licence</string>
+
+    <string name="launchmenu_launchroblox">Launch Roblox</string>
+    <string name="launchmenu_configuresettings">Configure settings</string>
+    <string name="launchmenu_wiki">See the wiki for help</string>
+
+    <string name="menu_title">Chevstrap menu</string>
+
+    <string name="menu_behaviour_title">Launcher</string>
+    <string name="menu_behaviour_description">Configure what Chevstrap should do when launching Roblox.</string>
+    <string name="menu_behaviour_preferred_roblox_app_title">Preferred Roblox app</string>
+    <string name="menu_behaviour_preferred_roblox_app_description">Select which Roblox app to use and apply changes.</string>
+    <string name="menu_behaviour_bring_latest_release_title">Manual Chevstrap upgrade</string>
+    <string name="menu_behaviour_bring_latest_release_description">Directs you to the latest Chevstrap release page if your current version is outdated.</string>
+
+    <string name="menu_settings_description">Configure options related to Chevstrap’s behaviour.</string>
+    <string name="menu_settings_accordion_title_appearence">Appearance</string>
+    <string name="menu_settings_accordion_description_appearence">Configure how Chevstrap looks</string>
+    <string name="menu_settings_color_theme_in_app_title">Colour theme</string>
+    <string name="menu_settings_color_theme_in_app_description">Select the colour theme for Chevstrap. Saving and restarting is recommended to apply changes.</string>
+    <string name="menu_settings_background_video_title">Background video</string>
+    <string name="menu_settings_background_video_description">Saving and restarting is recommended to apply changes.</string>
+    <string name="menu_settings_language_title">Language</string>
+    <string name="menu_settings_language_description">Saving and restarting is recommended to apply changes.</string>
+    <string name="menu_settings_accordion_title_robloxsettingsmenu">Roblox settings menu</string>
+    <string name="menu_settings_accordion_description_robloxsettingsmenu">Adjust Roblox preferences before launching.</string>
+    <string name="menu_settings_force_portrait_mode_title">Force portrait mode</string>
+    <string name="menu_settings_force_portrait_mode_description">Keeps the app in portrait orientation even if the device is rotated.</string>
+
+    <string name="menu_devicepreferences_title">Device Preferences</string>
+    <string name="menu_devicepreferences_description">Configure curated Roblox preferences for this device.</string>
+    <string name="menu_devicepreferences_help_title">Help</string>
+    <string name="menu_devicepreferences_help_description">Learn about Device Preferences, how to use them.</string>
+    <string name="menu_devicepreferences_allowmanagelocalpreferences_title">Allow Chevstrap to manage Device Preferences</string>
+    <string name="menu_devicepreferences_allowmanagelocalpreferences_description">Disabling this prevents the configured Device Preferences from being applied to Roblox.</string>
+    <string name="menu_devicepreferences_reducemotion_title">Reduce motion</string>
+    <string name="menu_devicepreferences_reducemotion_description">Reduces subtle environmental motion effects, such as grass swaying and similar elements, causing them to move less or stop entirely.</string>
+    <string name="menu_devicepreferences_haptics_title">Haptics</string>
+    <string name="menu_devicepreferences_haptics_description">Controls haptic feedback on this device, including vibrations, allowing the device to produce a physical sensation in response to interactions.</string>
+
+    <string name="menu_integrations_title">Integrations</string>
+    <string name="menu_integrations_description">Configure additional functionality to go alongside Roblox.</string>
+    <string name="menu_integrations_section_activitytracking">Activity tracking</string>
+    <string name="menu_integrations_enableactivitytracking_title">Enable activity tracking</string>
+    <string name="menu_integrations_enableactivitytracking_description">Allows Chevstrap to track what Roblox experience you are playing on this device. Certain features may require this.</string>
+    <string name="menu_integrations_queryserverlocation_title">Query server location</string>
+    <string name="menu_integrations_queryserverlocation_description">Shows your server location in-game via ipinfo.io</string>
+    <string name="menu_integrations_experiencehistory_title">Experience history</string>
+    <string name="menu_integrations_experiencehistory_description">Shows all the experiences you’ve recently played on this device.</string>
+    <string name="menu_integrations_section_fpsunlocking">FPS unlocking</string>
+    <string name="menu_integrations_setframeratelimit_title">Framerate limit</string>
+    <string name="menu_integrations_setframeratelimit_description">Set to 0 for Roblox’s native framerate unlocker.</string>
+    <string name="menu_integrations_setframeratelimit_240_warning">Going above a 240 framerate limit is not recommended, as this change may cause issues.</string>
+    <string name="menu_integrations_enablefpsdisplay_title">Display FPS</string>
+    <string name="menu_integrations_enablefpsdisplay_description">Displays a real-time frames-per-second overlay.</string>
+
+    <string name="menu_fastflags_title">FFlags Settings</string>
+    <string name="menu_fastflags_description">Control how specific Roblox engine parameters and features are configured.</string>
+    <string name="menu_fastflags_search">Search</string>
+    <string name="menu_fastflags_help_title">Help</string>
+    <string name="menu_fastflags_help_description">Learn about FFlags, also known as Fast Flags, what presets do, and how to use them.</string>
+    <string name="menu_fastflags_allowmanagefflags_title">Allow Chevstrap to manage Fast Flags</string>
+    <string name="menu_fastflags_allowmanagefflags_description">Disabling this prevents the configured Fast Flags from being applied to Roblox.</string>
+    <string name="menu_fastflags_reseteverythingtodefaults_title">Reset everything to defaults</string>
+    <string name="menu_fastflags_section_presets">Presets</string>
+    <string name="menu_fastflags_accordion_title_renderinggraphics">Rendering and graphics</string>
+    <string name="menu_fastflags_renderingmode_title">Rendering mode</string>
+    <string name="menu_fastflags_completelygraysky_title">Force completely grey sky</string>
+    <string name="menu_fastflags_msaa_title">Anti-aliasing quality (MSAA)</string>
+    <string name="menu_fastflags_texturequality_title">Texture quality</string>
+
+    <string name="menu_fastflageditor_addnew">Add new</string>
+    <string name="menu_fastflageditor_alreadyexists">An entry for this flag name already exists.</string>
+    <string name="menu_fastflageditor_bannertext">Misusing this can lead to instability or unexpected things happening.</string>
+    <string name="menu_fastflageditor_bannertitle">Use with caution.</string>
+    <string name="menu_fastflageditor_conflictingimport">Some of the flags you are trying to import are already set. Do you want to replace the current values with those from the import? \n\nConflicting flags:\n</string>
+    <string name="menu_fastflageditor_deleteselected">Delete selected</string>
+    <string name="menu_fastflageditor_deleteall">Delete all</string>
+    <string name="menu_fastflageditor_description">Manage your own Fast Flags. Hold a column to edit.</string>
+    <string name="menu_fastflageditor_copyall">Copy all</string>
+    <string name="menu_fastflageditor_exportjson">Export JSON</string>
+    <string name="menu_fastflageditor_invalidjson">Your input JSON format is invalid. Please check your JSON again and make corrections. \n\nMore information:</string>
+    <string name="menu_fastflageditor_jsoncopiedtoclipboard">Copied to clipboard.</string>
+    <string name="menu_fastflageditor_search">Search</string>
+    <string name="menu_fastflageditor_showpresetflags">Show preset flags</string>
+    <string name="menu_fastflageditor_backups">Backups</string>
+    <string name="menu_fastflageditor_title">FFlags Editor</string>
+    <string name="menu_fastflageditor_warning_text">FFlags (Fast Flags) are internal feature flags used by the Roblox client that can be changed remotely without requiring an update. They are intended only for Roblox engineers and staff and were not designed for regular users. While powerful, modifying FFlags is not recommended, as doing so can negatively affect how the Roblox client behaves or cause other unforeseen issues. Only use the editor to change FFlags if you are totally sure what you are doing with FFlags. Avoid importing large flag lists from others, whether created by people or generated by artificial intelligence (AI), that claim to improve performance or provide similar benefits. These can easily lead to serious issues. If you are doing this, stop immediately. \n\nDo you accept full responsibility for any consequences and still want to proceed?</string>
+
+    <string name="common_default">Default</string>
+    <string name="common_automatic">Automatic</string>
+    <string name="common_none">None</string>
+    <string name="common_yes">Yes</string>
+    <string name="common_ok">OK</string>
+    <string name="common_no">No</string>
+    <string name="common_value">Value</string>
+    <string name="common_name">Name</string>
+    <string name="common_index">Index</string>
+    <string name="common_state">State</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_close">Close</string>
+    <string name="common_save_and_launch">Save and launch</string>
+    <string name="common_save">Save</string>
+    <string name="common_valid">Valid</string>
+    <string name="common_invalid">Invalid</string>
+    <string name="common_importfromfile">Import from file</string>
+    <string name="common_importjson">Import JSON</string>
+    <string name="common_addsingle">Add single</string>
+    <string name="common_report_exception">Report exception</string>
+    <string name="common_chevstrap">Chevstrap</string>
+    <string name="common_discord_rich_presence">Discord Rich Presence</string>
+    <string name="common_general">General</string>
+
+    <string name="common_lowest">Lowest</string>
+    <string name="common_low">Low</string>
+    <string name="common_medium">Medium</string>
+    <string name="common_high">High</string>
+
+    <string name="common_level1">Level 1</string>
+    <string name="common_level2">Level 2</string>
+    <string name="common_level3">Level 3</string>
+    <string name="common_level4">Level 4</string>
+    <string name="common_level5">Level 5</string>
+    <string name="common_level6">Level 6</string>
+    <string name="common_level7">Level 7</string>
+    <string name="common_level8">Level 8</string>
+    <string name="common_level9">Level 9</string>
+    <string name="common_level10">Level 10</string>
+
+    <string name="enums_flagpresets_renderingmode_vulkan">Vulkan</string>
+    <string name="enums_flagpresets_renderingmode_opengl">OpenGL</string>
+
+    <string name="enums_flagpresets_chevstrap_settings_apptheme_dark">Dark</string>
+    <string name="enums_flagpresets_chevstrap_settings_apptheme_light">Light</string>
+
+    <string name="enums_flagpresets_roblox_global">Global</string>
+    <string name="enums_flagpresets_roblox_vng">VN</string>
+</resources>
