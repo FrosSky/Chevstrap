@@ -1,5 +1,3 @@
 FFLAGS DISABLED BY ROBLOX ITSELF.
 
-DISCONTINUED
-
-chevstrap 2.0? no. thank you. 
+chevstrap coming back? 🧐
