@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- About -->
+    <string name="about_contributors_code_title">Code</string>
+    <string name="about_contributors_proofreader_title">Proofreader</string>
+    <string name="about_description">Information about Chevstrap.</string>
+    <string name="about_discord_server_title">Discord server</string>
+    <string name="about_github_repository_title">GitHub repository</string>
+    <string name="about_help_and_information">Help and information</string>
+    <string name="about_license_mit">MIT licence</string>
+    <string name="about_licenses_title">Licences</string>
+    <string name="about_section_contributors_title">Contributors</string>
+    <string name="about_section_special_thanks_title">Special Thanks</string>
+    <string name="about_special_thanks_bloxstrap_contributors_desc_title">Chevstrap was based on Bloxstrap.</string>
+    <string name="about_title">About</string>
+    <string name="about_translator_title">Translator</string>
+
+    <!-- Bootstrapper -->
+    <string name="bootstrapper_status_applying_modifications">Applying changes to Roblox…</string>
+    <string name="bootstrapper_status_connecting">Connecting to Roblox…</string>
+    <string name="bootstrapper_status_starting_roblox">Starting Roblox</string>
+    <string name="bootstrapper_status_upgrading_chevstrap">Chevstrap’s latest version page…</string>
+
+    <!-- Common -->
+    <string name="common_add_single">Add single</string>
+    <string name="common_automatic">Automatic</string>
+    <string name="common_cancel">Cancel</string>
+    <string name="common_close">Close</string>
+    <string name="common_default">Default</string>
+    <string name="common_discord_rich_presence">Discord Rich Presence</string>
+    <string name="common_discord_server">Discord server</string>
+    <string name="common_general">General</string>
+    <string name="common_high">High</string>
+    <string name="common_import_from_file">Import from file</string>
+    <string name="common_import_json">Import JSON</string>
+    <string name="common_index">Index</string>
+    <string name="common_invalid">Invalid</string>
+    <string name="common_warning">Warning</string>
+    <string name="common_level1">Level 1</string>
+    <string name="common_level2">Level 2</string>
+    <string name="common_level3">Level 3</string>
+    <string name="common_level4">Level 4</string>
+    <string name="common_level5">Level 5</string>
+    <string name="common_level6">Level 6</string>
+    <string name="common_level7">Level 7</string>
+    <string name="common_level8">Level 8</string>
+    <string name="common_level9">Level 9</string>
+    <string name="common_level10">Level 10</string>
+    <string name="common_login">Login</string>
+    <string name="common_logout">Logout</string>
+    <string name="common_low">Low</string>
+    <string name="common_lowest">Lowest</string>
+    <string name="common_medium">Medium</string>
+    <string name="common_name">Name</string>
+    <string name="common_no">No</string>
+    <string name="common_hide">Hide</string>
+    <string name="common_show">Show</string>
+    <string name="common_none">None</string>
+    <string name="common_ok">OK</string>
+    <string name="common_pls_wait">Please wait a moment. If it still looks like this, there may be an issue.</string>
+    <string name="common_login_failed_try_again">Login failed. Please log out and try again.</string>
+    <string name="common_logout_successful">Logout successful.</string>
+    <string name="common_failed_to_log_out">Failed to log out.</string>
+    <string name="common_report_exception">Report exception</string>
+    <string name="common_save">Save</string>
+    <string name="common_save_and_launch">Save and launch</string>
+    <string name="common_state">State</string>
+    <string name="common_valid">Valid</string>
+    <string name="common_value">Value</string>
+    <string name="common_yes">Yes</string>
+
+    <!-- Context Menu -->
+    <string name="context_menu_game_history_title">Game history</string>
+    <string name="context_menu_game_history_description">Game history is recorded for your current Roblox session. New entries are added when you leave between games. These entries are temporary, as they are stored in memory. Some servers may also become unavailable to rejoin.</string>
+    <string name="context_menu_game_history_rejoin">Rejoin</string>
+    <string name="context_menu_logs_viewer_title">Logs viewer</string>
+    <string name="context_menu_logs_viewer_view">View</string>
+
+    <!-- Dialog -->
+    <string name="dialog_access_to_roblox_directories_is_blocked">Android restricts access to Roblox\'s directories, so Chevstrap can\'t access them directly.\n\nLearn more here:</string>
+    <string name="dialog_modded_roblox_warning">Third-party modifications can interfere with Roblox. If you’re using a modified version of Roblox for exploits or reverse engineering, please uninstall it to ensure you’re not running a modified client, and get the native Roblox app from an official source such as Google Play.</string>
+    <string name="dialog_device_full_storage">Your device doesn’t have enough storage to run Chevstrap properly. Try clearing some space to continue.</string>
+    <string name="dialog_failed_to_apply_changes">An issue occurred while applying changes to Roblox. More information:</string>
+    <string name="dialog_failed_to_import_file">An issue occurred while importing the file. More information:</string>
+    <string name="dialog_failed_to_launch">An issue occurred while launching Roblox. More information:</string>
+    <string name="dialog_not_installed">Roblox may not be installed yet. Please install it before launching.</string>
+    <string name="dialog_player_error_help_information">For information about why this could be happening and how this can be resolved, learn more:</string>
+    <string name="dialog_unsaved_changes">You have unsaved changes. Are you sure you want to close without saving?</string>
+    <string name="dialog_remove_custom_background">Are you sure you want to remove your custom background image and restore the default background?</string>
+    <string name="dialog_failed_to_navigate_to_a_page">Failed to navigate to a page. More information:</string>
+    <string name="dialog_failed_to_refresh_page">An issue occurred while refreshing a page. More information:</string>
+    <string name="dialog_feature_requires_discord_login">This feature cannot be used without logging in with Discord first.</string>
+    <string name="dialog_feature_requires_notification_permission">This feature cannot be used unless notification permission is granted.</string>
+
+    <!-- Enums -->
+    <string name="enums_presets_behaviour_roblox_galaxy_store">Galaxy Store</string>
+    <string name="enums_presets_behaviour_roblox_global">Global</string>
+    <string name="enums_presets_behaviour_roblox_vng">VNG</string>
+    <string name="enums_presets_integrations_discord_online_status_do_not_disturb">Do Not Disturb</string>
+    <string name="enums_presets_integrations_discord_online_status_idle">Idle</string>
+    <string name="enums_presets_integrations_discord_online_status_online">Online</string>
+    <string name="enums_presets_settings_app_theme_in_app_dark">Dark</string>
+    <string name="enums_presets_settings_app_theme_in_app_light">Light</string>
+
+    <!-- Launch menu -->
+    <string name="launch_menu_configure_settings">Configure settings</string>
+    <string name="launch_menu_launch_roblox">Launch Roblox</string>
+    <string name="launch_menu_wiki">See the wiki for help</string>
+
+    <!-- Menu: Behaviour -->
+    <string name="menu_behaviour_check_latest_release_description">Directs you to the latest Chevstrap release page if your current version is outdated.</string>
+    <string name="menu_behaviour_check_latest_release_title">Check latest release</string>
+    <string name="menu_behaviour_description">Configure what Chevstrap should do when launching Roblox.</string>
+    <string name="menu_behaviour_preferred_roblox_app_description">Select which Roblox app to use and apply changes.</string>
+    <string name="menu_behaviour_preferred_roblox_app_title">Preferred Roblox app</string>
+    <string name="menu_behaviour_title">Launcher</string>
+
+    <!-- Menu: Logs Viewer -->
+    <string name="menu_logs_viewer_title">Logs Viewer</string>
+
+    <!-- Menu: Discord -->
+    <string name="menu_discord_account_title">Discord Account</string>
+    <string name="menu_discord_login_title">Discord Login</string>
+
+    <!-- Menu: Integrations -->
+    <string name="menu_integrations_allow_activity_joining_description">Allows anybody to join the game you\'re currently in through your Discord profile.</string>
+    <string name="menu_integrations_allow_activity_joining_title">Allow activity joining</string>
+    <string name="menu_integrations_description">Configure additional functionality to go alongside Roblox.</string>
+    <string name="menu_integrations_enable_activity_tracking_description">Allows Chevstrap to track what Roblox experience you are playing on this device. Certain features may require this.</string>
+    <string name="menu_integrations_enable_activity_tracking_title">Enable activity tracking</string>
+    <string name="menu_integrations_game_history_description">Shows all the games you last played.</string>
+    <string name="menu_integrations_game_history_title">Games History Menu</string>
+    <string name="menu_integrations_login_with_discord_title">Login with Discord</string>
+    <string name="menu_integrations_discord_account_title">Discord Account</string>
+    <string name="menu_integrations_query_server_location_description">Shows your server location in-game via ipinfo.io</string>
+    <string name="menu_integrations_query_server_location_title">Query server location</string>
+    <string name="menu_integrations_section_activity_tracking">Activity tracking</string>
+    <string name="menu_integrations_section_discord_rich_presence">Discord Rich Presence</string>
+    <string name="menu_integrations_section_discord_gateway">Discord Gateway</string>
+    <string name="menu_integrations_show_game_activity_description">The Roblox game you\'re playing will be shown on your Discord profile.</string>
+    <string name="menu_integrations_show_game_activity_title">Show game activity</string>
+    <string name="menu_integrations_show_roblox_account_description">Shows the Roblox account you\'re playing with on your Discord profile.</string>
+    <string name="menu_integrations_show_roblox_account_title">Show Roblox account</string>
+    <string name="menu_integrations_discord_status_title">Preferred Discord Status</string>
+    <string name="menu_integrations_discord_status_description">Sets your preferred Discord status while connected to the Discord Gateway.</string>
+    <string name="menu_integrations_allow_custom_presence_title">Allow Customization</string>
+    <string name="menu_integrations_allow_custom_presence_description">Allows games you\'re currently playing to customize your Discord Rich Presence, including details, state, images, and hover text. These changes are not moderated, so use this feature with caution.</string>
+    <string name="menu_integrations_verified_custom_presence_only_title">Verified Custom Only</string>
+    <string name="menu_integrations_verified_custom_presence_only_description">Only allows games whose user or group has a Verified Badge to set custom Rich Presence.</string>
+    <string name="menu_integrations_title">Integrations</string>
+
+    <!-- Menu: Settings -->
+    <string name="menu_settings_accordion_description_appearence">Configure how Chevstrap looks.</string>
+    <string name="menu_settings_accordion_title_appearence">Appearance</string>
+    <string name="menu_settings_background_image_description">Choose a custom image to use as the app background.</string>
+    <string name="menu_settings_background_image_title">Custom Background Image</string>
+    <string name="menu_settings_app_theme_in_app_title">App Theme</string>
+    <string name="menu_settings_description">Configure options related to Chevstrap’s behavior.</string>
+    <string name="menu_settings_open_logs_viewer_description">Shows every log generated by Chevstrap itself.</string>
+    <string name="menu_settings_open_logs_viewer_title">Logs Viewer Menu</string>
+
+    <!-- Menu -->
+    <string name="menu_title">Chevstrap menu</string>
+
+    <!-- Notifications -->
+    <string name="notification_connected_to_a_server">Connected to a server</string>
+    <string name="notification_server_location_failed">Server location could not be identified</string>
+    <string name="notification_discord_rich_presence_visibility_controller_title">Discord Rich Presence</string>
+    <string name="notification_discord_rich_presence_visibility_controller_description">Set the visibility of your Discord Rich Presence.</string>
+
+</resources>
