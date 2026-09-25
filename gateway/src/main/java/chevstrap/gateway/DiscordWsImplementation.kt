@@ -279,6 +279,7 @@ class DiscordWsImplementation {
 
     private fun stopConnection() {
         val socket: WebSocket?
+        val wasReady: Boolean
 
         synchronized(connectionLock) {
             if (
@@ -289,6 +290,19 @@ class DiscordWsImplementation {
                 return
             }
 
+            socket = webSocket
+            wasReady = isReady
+        }
+
+        if (
+            wasReady &&
+            socket != null &&
+            connectionMode == ConnectionMode.RPC
+        ) {
+            sendClearPresence(socket)
+        }
+
+        synchronized(connectionLock) {
             isStopping = true
             isRunning = false
             isReady = false
@@ -299,8 +313,11 @@ class DiscordWsImplementation {
             presencePending = false
             pendingActivityRPC = null
 
-            socket = webSocket
-            webSocket = null
+            if (webSocket === socket) {
+                webSocket = null
+            }
+
+            client = null
         }
 
         stopHeartbeat()
@@ -311,29 +328,22 @@ class DiscordWsImplementation {
         invalidSessionJob?.cancel()
         invalidSessionJob = null
 
-        if (
-            connectionMode == ConnectionMode.RPC &&
-            socket != null
-        ) {
-            sendClearPresence(socket)
-        }
-
         socket?.close(
             1000,
             "Connection to gateway closed"
         )
 
-        client?.let {
-            runCatching {
-                it.dispatcher.cancelAll()
-                it.connectionPool.evictAll()
-                it.cache?.close()
-            }
-        }
-
-        client = null
-
         synchronized(connectionLock) {
+            sequence = null
+            sessionId = ""
+            resumeGatewayUrl = null
+
+            heartbeat = 0
+            heartbeatAwaitingAck = false
+            lastHeartbeatSentAt = 0L
+
+            reconnectDelay = INITIAL_RECONNECT_DELAY
+
             shutdownFinished = true
         }
     }
@@ -412,7 +422,7 @@ class DiscordWsImplementation {
 
                     put(
                         "status",
-                        status
+                        if (_status.isNullOrBlank()) "online" else _status
                     )
 
                     put(
@@ -449,6 +459,13 @@ class DiscordWsImplementation {
             return false
         }
 
+        val statusToUse =
+            if (_status.isNullOrBlank()) {
+                "online"
+            } else {
+                _status
+            }
+
         return runCatching {
             val payload =
                 JSONObject()
@@ -466,7 +483,7 @@ class DiscordWsImplementation {
                             )
                             .put(
                                 "status",
-                                status
+                                statusToUse
                             )
                             .put(
                                 "afk",
@@ -722,7 +739,6 @@ class DiscordWsImplementation {
 
         if (sent) {
             heartbeatAwaitingAck = true
-
             lastHeartbeatSentAt =
                 System.currentTimeMillis()
         } else {

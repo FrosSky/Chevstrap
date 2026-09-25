@@ -96,6 +96,7 @@ class AccountFragment : Fragment() {
         viewT = view
         initialize()
         initializeLogic()
+
         val token =
             PrefsManager.getToken()
 

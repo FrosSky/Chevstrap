@@ -29,15 +29,12 @@ object NotifyIconWrapper {
         mainHandler.post(action)
     }
 
-    private fun createNotificationChannel(
-        notificationManager: NotificationManager
-    ) {
+    private fun createNotificationChannel(notificationManager: NotificationManager) {
         val channel = NotificationChannel(
             CHANNEL_ID,
             CHANNEL_NAME,
             NotificationManager.IMPORTANCE_HIGH
         )
-
         notificationManager.createNotificationChannel(channel)
     }
 
@@ -56,8 +53,7 @@ object NotifyIconWrapper {
         )
 
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager?
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
         if (notificationManager == null) {
             logger.writeLine(
@@ -67,11 +63,11 @@ object NotifyIconWrapper {
             return
         }
 
+        // Buat channel menggunakan context yang dikirimkan
         createNotificationChannel(notificationManager)
 
         try {
             val universeId = universeStr.toLong()
-
             logger.writeLine(
                 "NotifyIconWrapper::showConnectionNotification",
                 "Universe ID set to: $universeId"
@@ -107,26 +103,29 @@ object NotifyIconWrapper {
                         R.drawable.chevstrap_icon
                     )
 
-                    val builder = NotificationCompat.Builder(
+                    val titleText = ResourceManagerEx.getStringOrEmpty(
                         context,
-                        CHANNEL_ID
-                    )
+                        R.string.notification_connected_to_a_server
+                    ).ifEmpty { "Connected to server" }
+
+                    val bodyText = if (!location.isNullOrBlank()) {
+                        location
+                    } else {
+                        ResourceManagerEx.getStringOrEmpty(
+                            context,
+                            R.string.notification_server_location_failed
+                        ).ifEmpty { "N/A" }
+                    }
+
+                    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.drawable.chevstrap_icon)
                         .setLargeIcon(bigIcon)
-                        .setContentTitle(
-                            ResourceManagerEx.getStringOrEmpty(
-                                App.appContext!!,
-                                R.string.notification_connected_to_a_server
-                            )
-                        )
-                        .setContentText(location)
+                        .setContentTitle(titleText)
+                        .setContentText(bodyText)
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-                    notificationManager.notify(
-                        NOTIFICATION_ID,
-                        builder.build()
-                    )
+                    notificationManager.notify(NOTIFICATION_ID, builder.build())
 
                     logger.writeLine(
                         "NotifyIconWrapper::showConnectionNotification",
@@ -147,31 +146,25 @@ object NotifyIconWrapper {
                         R.drawable.chevstrap_icon
                     )
 
-                    val builder = NotificationCompat.Builder(
+                    val titleText = ResourceManagerEx.getStringOrEmpty(
                         context,
-                        CHANNEL_ID
-                    )
+                        R.string.notification_connected_to_a_server
+                    ).ifEmpty { "Connected to server" }
+
+                    val bodyText = ResourceManagerEx.getStringOrEmpty(
+                        context,
+                        R.string.notification_server_location_failed
+                    ).ifEmpty { "Failed to retrieve server location" }
+
+                    val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                         .setSmallIcon(R.drawable.chevstrap_icon)
                         .setLargeIcon(bigIcon)
-                        .setContentTitle(
-                            ResourceManagerEx.getStringOrEmpty(
-                                App.appContext!!,
-                                R.string.notification_connected_to_a_server
-                            )
-                        )
-                        .setContentText(
-                            ResourceManagerEx.getStringOrEmpty(
-                                App.appContext!!,
-                                R.string.notification_server_location_failed
-                            )
-                        )
+                        .setContentTitle(titleText)
+                        .setContentText(bodyText)
                         .setAutoCancel(true)
                         .setPriority(NotificationCompat.PRIORITY_HIGH)
 
-                    notificationManager.notify(
-                        NOTIFICATION_ID,
-                        builder.build()
-                    )
+                    notificationManager.notify(NOTIFICATION_ID, builder.build())
 
                     logger.writeLine(
                         "NotifyIconWrapper::showConnectionNotification",
@@ -187,12 +180,10 @@ object NotifyIconWrapper {
         val logger = App.logger
 
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager?
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
         if (notificationManager != null) {
             notificationManager.cancel(NOTIFICATION_ID)
-
             logger.writeLine(
                 "NotifyIconWrapper::hideConnectionNotification",
                 "Connection notification hidden."
@@ -213,8 +204,7 @@ object NotifyIconWrapper {
         val logger = App.logger
 
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager?
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
         if (notificationManager == null) {
             logger.writeLine(
@@ -225,6 +215,7 @@ object NotifyIconWrapper {
         }
 
         createNotificationChannel(notificationManager)
+
         val bigIcon = BitmapFactory.decodeResource(
             context.resources,
             R.drawable.chevstrap_icon
@@ -240,36 +231,28 @@ object NotifyIconWrapper {
             context,
             DISCORD_RPC_VISIBILITY_NOTIFICATION_ID,
             toggleIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or
-                    PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        val buttonText = if (enabled) {
-            ResourceManagerEx.getStringOrEmpty(
-                App.appContext!!,
-                R.string.common_hide
-            )
-        } else {
-            ResourceManagerEx.getStringOrEmpty(
-                App.appContext!!,
-                R.string.common_show
-            )
-        }
+        val buttonTextRes = if (enabled) R.string.common_hide else R.string.common_show
+        val buttonText = ResourceManagerEx.getStringOrEmpty(context, buttonTextRes)
+            .ifEmpty { if (enabled) "Hide" else "Show" }
 
-        val builder = NotificationCompat.Builder(
+        val titleText = ResourceManagerEx.getStringOrEmpty(
             context,
-            CHANNEL_ID
-        )
+            R.string.notification_discord_rich_presence_visibility_controller_title
+        ).ifEmpty { "Discord Rich Presence" }
+
+        val descText = ResourceManagerEx.getStringOrEmpty(
+            context,
+            R.string.notification_discord_rich_presence_visibility_controller_description
+        ).ifEmpty { "Set the visibility of your Discord Rich Presence." }
+
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setSmallIcon(R.drawable.chevstrap_icon)
             .setLargeIcon(bigIcon)
-            .setContentTitle(ResourceManagerEx.getStringOrEmpty(
-                App.appContext!!,
-                R.string.notification_discord_rich_presence_visibility_controller_title
-            ))
-            .setContentText(ResourceManagerEx.getStringOrEmpty(
-                App.appContext!!,
-                R.string.notification_discord_rich_presence_visibility_controller_description
-            ))
+            .setContentTitle(titleText)
+            .setContentText(descText)
             .setOngoing(true)
             .setAutoCancel(false)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -295,14 +278,10 @@ object NotifyIconWrapper {
         val logger = App.logger
 
         val notificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE)
-                    as NotificationManager?
+            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager?
 
         if (notificationManager != null) {
-            notificationManager.cancel(
-                DISCORD_RPC_VISIBILITY_NOTIFICATION_ID
-            )
-
+            notificationManager.cancel(DISCORD_RPC_VISIBILITY_NOTIFICATION_ID)
             logger.writeLine(
                 "NotifyIconWrapper::hideDiscordRpcVisibilityNotification",
                 "Discord RPC visibility notification hidden."

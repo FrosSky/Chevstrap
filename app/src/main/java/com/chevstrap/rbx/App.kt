@@ -40,10 +40,8 @@ class App : Application() {
             "https://github.com/FrosSky/Chevstrap/wiki"
 
         private var _isSmallMode = false
-        private var _discordRichPresenceVisibility = false
         private var _userData = ""
         private val SmallModeListeners = mutableSetOf<(Boolean) -> Unit>()
-        private val DiscordRichPresenceVisibilityListeners = mutableSetOf<(Boolean) -> Unit>()
         var bootstrapper: Bootstrapper? = null
 
         @JvmStatic

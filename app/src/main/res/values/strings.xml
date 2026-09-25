@@ -165,7 +165,7 @@
 
     <!-- Notifications -->
     <string name="notification_connected_to_a_server">Connected to a server</string>
-    <string name="notification_server_location_failed">Server location could not be identified</string>
+    <string name="notification_server_location_failed">Failed to retrieve server location</string>
     <string name="notification_discord_rich_presence_visibility_controller_title">Discord Rich Presence</string>
     <string name="notification_discord_rich_presence_visibility_controller_description">Set the visibility of your Discord Rich Presence.</string>
 

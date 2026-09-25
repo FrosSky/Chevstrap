@@ -96,10 +96,43 @@ class CustomWatcher private constructor() {
     }
 
     val allHistoryServer: MutableCollection<ActivityData>
-        get() = activityWatcher?.history
-            ?.filterNotNull()
-            ?.toMutableList()
-            ?: mutableListOf()
+        get() {
+            val history = activityWatcher?.history
+                ?.filterNotNull()
+                ?: return mutableListOf()
+
+            val grouped = LinkedHashMap<Long, ActivityData>()
+
+            for (data in history) {
+                val universeId = data.universeId
+
+                if (universeId == 0L) {
+                    continue
+                }
+
+                val existing = grouped[universeId]
+
+                if (existing == null) {
+                    grouped[universeId] = data
+                    continue
+                }
+
+                val joined = listOfNotNull(
+                    existing.timeJoined,
+                    data.timeJoined
+                ).minOrNull()
+
+                val left = listOfNotNull(
+                    existing.timeLeft,
+                    data.timeLeft
+                ).maxOrNull()
+
+                existing.timeJoined = joined
+                existing.timeLeft = left
+            }
+
+            return grouped.values.toMutableList()
+        }
 
     companion object {
         private const val LOG_IDENTIFIER = "CustomWatcher"

@@ -813,7 +813,6 @@ class SettingsScreen(
             }
 
         } else {
-
             linearBackground.setBackgroundResource(
                 if (isDark) {
                     R.drawable.background_normal
@@ -895,7 +894,6 @@ class SettingsScreen(
             )
 
         if (bitmap != null) {
-
             linearBackground.background =
                 bitmap.toDrawable(
                     activity.resources

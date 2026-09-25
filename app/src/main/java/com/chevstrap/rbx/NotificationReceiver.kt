@@ -15,13 +15,15 @@ class NotificationReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action != ACTION_TOGGLE_DISCORD_RPC_VISIBILITY) return
 
-        val robloxDiscordRPC = CustomWatcher.getInstance().robloxDiscordRPC
-        val toThisVisible = !robloxDiscordRPC?.isVisibleState()!!
-        robloxDiscordRPC.setVisibility(toThisVisible)
+        CustomWatcher.getInstance().robloxDiscordRPC?.let { robloxDiscordRPC ->
+            val toThisVisible = !robloxDiscordRPC.isVisibleState()
 
-        NotifyIconWrapper.showDiscordRpcVisibilityNotification(
-            context,
-            toThisVisible
-        )
+            robloxDiscordRPC.setVisibility(toThisVisible)
+
+            NotifyIconWrapper.showDiscordRpcVisibilityNotification(
+                context,
+                toThisVisible
+            )
+        }
     }
 }

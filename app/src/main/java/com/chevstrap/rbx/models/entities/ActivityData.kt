@@ -98,12 +98,6 @@ class ActivityData(machineAddress: String? = "") {
             App.logger.writeLine(LOG_IDENTIFIER, "RPC Launch Data set to $value")
         }
 
-    var customMessageRPC: JSONObject? = null
-        set(value) {
-            field = value
-            App.logger.writeLine(LOG_IDENTIFIER, "Custom Message RPC to $value")
-        }
-
     var machineAddress: String? = machineAddress
         set(value) {
             field = value

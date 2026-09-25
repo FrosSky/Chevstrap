@@ -160,20 +160,11 @@ class SettingsActivity : AppCompatActivity() {
         )
 
         App.config.listen(ConfigData::appThemeInApp) { value ->
-            settingsScreen.updateTheme(
-                value
-            ) {
+            settingsScreen.updateTheme(value) {
                 refreshCurrentPage()
             }
-        }
 
-        App.config.listen(ConfigData::appThemeInApp) { value ->
-            App.logger.writeLine("aaaaaaaaaa", value)
-            settingsScreen.updateTheme(
-                value
-            ) {
-                refreshCurrentPage()
-            }
+            App.config.checkForChanges()
         }
 
         App.config.listen(ConfigData::backgroundImageUri) { value ->
@@ -190,6 +181,7 @@ class SettingsActivity : AppCompatActivity() {
                     ) {
                         refreshCurrentPage()
                     }
+                    App.config.checkForChanges()
                 } catch (_: Exception) {
                 }
             }
@@ -313,7 +305,6 @@ class SettingsActivity : AppCompatActivity() {
             )
 
         } catch (e: Exception) {
-
             Frontend.showExceptionDialog(
                 App.savedFragmentActivity,
                 ResourceManagerEx.getStringOrEmpty(
@@ -398,8 +389,7 @@ class SettingsActivity : AppCompatActivity() {
                     saveBackgroundImage(uri)
                         ?: return@registerForActivityResult
 
-                App.config.data.backgroundImageUri =
-                    path
+                App.config.data.backgroundImageUri = path
             }
     }
 

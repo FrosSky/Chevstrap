@@ -60,7 +60,6 @@ class IBootstrapperDialog(
             } catch (_: Exception) {
             }
         }
-
         dialog = null
     }
 

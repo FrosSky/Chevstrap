@@ -94,7 +94,6 @@ class ConfigManager private constructor() : JsonManager<ConfigData>() {
             previous = previous
         )
         lastNotifiedData = current.copy()
-
         return true
     }
 

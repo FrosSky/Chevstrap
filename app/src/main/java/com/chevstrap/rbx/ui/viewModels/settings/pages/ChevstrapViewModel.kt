@@ -52,6 +52,7 @@ class ChevstrapViewModel {
                     {
                         App.config.data.backgroundImageUri = ""
                         settingsActivity.removeBackgroundImage()
+                        App.config.checkForChanges()
                     },
                     {}
                 )
