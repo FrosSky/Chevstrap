@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
 
         PrefsManager.initialize(applicationContext)
         setupSmallModeListener()
-        // checkFirst()
+        checkFirst()
     }
 
     private fun checkFirst() {
