@@ -504,15 +504,6 @@ class SettingsActivity : AppCompatActivity() {
             smallModeListener
         )
 
-        //App.config.data.removeAppThemeListener(
-        //    appThemeListener
-        //)
-
-        //App.chevstrapSettings
-        //    .removeBackgroundImageUriListener(
-        //        backgroundImageThemeListener
-        //    )
-
         settingsScreen.clear()
 
         CustomWatcher
