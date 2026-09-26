@@ -439,6 +439,7 @@ class SettingsActivity : AppCompatActivity() {
 
             if (file.exists()) {
                 file.delete()
+                App.config.checkForChanges()
             } else {
                 true
             }
