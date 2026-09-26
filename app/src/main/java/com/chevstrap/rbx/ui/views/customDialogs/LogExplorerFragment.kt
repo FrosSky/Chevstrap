@@ -112,7 +112,7 @@ class LogExplorerFragment : DialogFragment() {
         )
 
         val title = view.findViewById<TextView>(
-            R.id.textview_is_desc
+            R.id.textview_is_title
         )
 
         val bottomLayout = view.findViewById<LinearLayout>(
