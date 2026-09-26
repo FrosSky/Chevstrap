@@ -321,7 +321,7 @@ class LogExplorerFragment : DialogFragment() {
                 formatFileInfo(file)
 
             holder.imageViewThumbnail.setImageResource(
-                R.drawable.blank90x90
+                R.drawable.just_a_blank
             )
 
             holder.imageViewThumbnail.setBackgroundColor(
