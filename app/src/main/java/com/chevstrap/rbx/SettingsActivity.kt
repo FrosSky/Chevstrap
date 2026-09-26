@@ -165,13 +165,9 @@ class SettingsActivity : AppCompatActivity() {
             }
         }
 
-        App.config.listen(ConfigData::backgroundImageUri) { value ->
+        App.config.listen(ConfigData::backgroundImageUri) { _ ->
             settingsScreen.refreshLinear27 {
-                if (value.isNotEmpty()) {
-                    settingsScreen.updateTheme(App.config.data.appThemeInApp) {
-                        refreshCurrentPage()
-                    }
-                } else {
+                settingsScreen.updateTheme(App.config.data.appThemeInApp) {
                     refreshCurrentPage()
                 }
             }
