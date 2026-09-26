@@ -13,48 +13,22 @@ permissions:
 
 jobs:
   build:
+    name: build
     runs-on: ubuntu-24.04
 
     steps:
-      - name: Checkout selected ref
+      - name: Checkout
         uses: actions/checkout@v5
         with:
           ref: ${{ inputs.ref }}
+          fetch-depth: 0
 
-      - name: Set up JDK 17
+      - name: Set up Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
           cache: gradle
-
-      - name: Find Android SDK
-        run: |
-          echo "ANDROID_HOME=$ANDROID_HOME"
-          echo "ANDROID_SDK_ROOT=$ANDROID_SDK_ROOT"
-
-          if [ -d "$ANDROID_HOME" ]; then
-            echo "Android SDK found at: $ANDROID_HOME"
-          elif [ -d "$ANDROID_SDK_ROOT" ]; then
-            echo "Android SDK found at: $ANDROID_SDK_ROOT"
-            echo "ANDROID_HOME=$ANDROID_SDK_ROOT" >> "$GITHUB_ENV"
-          else
-            echo "Android SDK was not found"
-            exit 1
-          fi
-
-      - name: Find apksigner
-        run: |
-          APKSIGNER=$(find "$ANDROID_HOME/build-tools" -type f -name apksigner | sort -V | tail -n 1)
-
-          if [ -z "$APKSIGNER" ]; then
-            echo "apksigner was not found"
-            find "$ANDROID_HOME" -type f -name apksigner 2>/dev/null || true
-            exit 1
-          fi
-
-          echo "APKSIGNER=$APKSIGNER"
-          echo "APKSIGNER=$APKSIGNER" >> "$GITHUB_ENV"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
@@ -62,57 +36,132 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Decode signing key
-        env:
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+      - name: Find Android SDK
+        shell: bash
         run: |
-          echo "$SIGNING_KEY" | base64 --decode > "$RUNNER_TEMP/key-chevstrap.jks"
+          set -e
 
-          if [ ! -s "$RUNNER_TEMP/key-chevstrap.jks" ]; then
-            echo "Keystore file is empty"
+          if [ -n "${ANDROID_HOME:-}" ] && [ -d "$ANDROID_HOME" ]; then
+            SDK_ROOT="$ANDROID_HOME"
+          elif [ -n "${ANDROID_SDK_ROOT:-}" ] && [ -d "$ANDROID_SDK_ROOT" ]; then
+            SDK_ROOT="$ANDROID_SDK_ROOT"
+          else
+            echo "Android SDK was not found."
             exit 1
           fi
 
-      - name: Build Release APK
-        run: ./gradlew :app:assembleRelease --stacktrace
+          echo "ANDROID_SDK_ROOT=$SDK_ROOT" >> "$GITHUB_ENV"
+          echo "ANDROID_HOME=$SDK_ROOT" >> "$GITHUB_ENV"
 
-      - name: Sign Release APKs
+          APKSIGNER="$(find "$SDK_ROOT/build-tools" \
+            -type f \
+            -name apksigner \
+            -print 2>/dev/null | sort -V | tail -n 1)"
+
+          if [ -z "$APKSIGNER" ]; then
+            echo "apksigner was not found in Android SDK build-tools."
+            exit 1
+          fi
+
+          chmod +x "$APKSIGNER"
+
+          echo "APKSIGNER=$APKSIGNER" >> "$GITHUB_ENV"
+          echo "Using apksigner: $APKSIGNER"
+
+      - name: Build Release APK
+        run: |
+          ./gradlew :app:assembleRelease --stacktrace
+
+      - name: Prepare signing key
+        shell: bash
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          set -e
+
+          if [ -z "$SIGNING_KEY" ]; then
+            echo "SIGNING_KEY secret is not configured."
+            exit 1
+          fi
+
+          KEYSTORE="$RUNNER_TEMP/key-chevstrap.jks"
+
+          printf '%s' "$SIGNING_KEY" | base64 --decode > "$KEYSTORE"
+
+          if [ ! -s "$KEYSTORE" ]; then
+            echo "Failed to create keystore."
+            exit 1
+          fi
+
+          echo "KEYSTORE=$KEYSTORE" >> "$GITHUB_ENV"
+
+      - name: Sign Release APK
+        shell: bash
         env:
           ALIAS: ${{ secrets.ALIAS }}
           KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          find app/build/outputs/apk/release -type f -name "*.apk" -print0 |
-          while IFS= read -r -d '' APK; do
+          set -e
+
+          if [ -z "$ALIAS" ]; then
+            echo "ALIAS secret is not configured."
+            exit 1
+          fi
+
+          if [ -z "$KEY_STORE_PASSWORD" ]; then
+            echo "KEY_STORE_PASSWORD secret is not configured."
+            exit 1
+          fi
+
+          if [ -z "$KEY_PASSWORD" ]; then
+            echo "KEY_PASSWORD secret is not configured."
+            exit 1
+          fi
+
+          shopt -s nullglob
+
+          APK_FILES=(
+            app/build/outputs/apk/release/*.apk
+          )
+
+          if [ "${#APK_FILES[@]}" -eq 0 ]; then
+            echo "No release APK was found."
+            exit 1
+          fi
+
+          for APK in "${APK_FILES[@]}"; do
+            case "$APK" in
+              *-signed.apk)
+                continue
+                ;;
+            esac
+
+            SIGNED_APK="${APK%.apk}-signed.apk"
+
             echo "Signing: $APK"
 
             "$APKSIGNER" sign \
-              --ks "$RUNNER_TEMP/key-chevstrap.jks" \
+              --ks "$KEYSTORE" \
               --ks-key-alias "$ALIAS" \
               --ks-pass "pass:$KEY_STORE_PASSWORD" \
               --key-pass "pass:$KEY_PASSWORD" \
+              --out "$SIGNED_APK" \
               "$APK"
+
+            echo "Verifying: $SIGNED_APK"
+
+            "$APKSIGNER" verify \
+              --verbose \
+              "$SIGNED_APK"
+
+            rm "$APK"
+
+            echo "Created: $SIGNED_APK"
           done
 
-      - name: Verify APK signatures
-        run: |
-          find app/build/outputs/apk/release -type f -name "*.apk" -print0 |
-          while IFS= read -r -d '' APK; do
-            echo "Verifying: $APK"
-            "$APKSIGNER" verify --verbose "$APK"
-          done
-
-      - name: Rename signed APKs
-        run: |
-          find app/build/outputs/apk/release -type f -name "*.apk" -print0 |
-          while IFS= read -r -d '' APK; do
-            if [[ "$APK" != *"-signed.apk" ]]; then
-              mv "$APK" "${APK%.apk}-signed.apk"
-            fi
-          done
-
-      - name: Upload Release APKs
-        uses: actions/upload-artifact@v5
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v6
         with:
           name: Chevstrap (Release)
           path: app/build/outputs/apk/release/*-signed.apk
