@@ -127,7 +127,7 @@ class ServerHistoryFragment : DialogFragment() {
         }
 
         val light =
-            App.config.data.appThemeInApp == "light"
+    App.config.data.appThemeInApp == "light"
 
         title.setTextColor(
             if (light) {
@@ -136,12 +136,12 @@ class ServerHistoryFragment : DialogFragment() {
                 Color.WHITE
             }
         )
-
+        
         description.setTextColor(
-            if (!light) {
-                "#E0E0E0".toColorInt()
+            if (light) {
+                "#4A4A4A".toColorInt()
             } else {
-                "#202020".toColorInt()
+                "#C8C8C8".toColorInt()
             }
         )
 
@@ -426,7 +426,7 @@ class ServerHistoryFragment : DialogFragment() {
                 )?.text =
                     ResourceManagerEx.getStringOrEmpty(
                         App.appContext,
-                        R.string.context_menu_logs_viewer_view
+                        R.string.context_menu_game_history_rejoin
                     )
 
                 holder.nameText.text =
