@@ -138,7 +138,7 @@ class ServerHistoryFragment : DialogFragment() {
         )
 
         description.setTextColor(
-            if (light) {
+            if (!light) {
                 "#E0E0E0".toColorInt()
             } else {
                 "#202020".toColorInt()
