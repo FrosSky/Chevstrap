@@ -35,7 +35,7 @@ class App : Application() {
         const val PROJECT_DOWNLOAD_LINK =
             "https://github.com/FrosSky/Chevstrap/releases/latest"
         const val DISCORD_SERVER_INVITE_LINK =
-            "https://discord.gg/2UcmM842h4"
+            "https://discord.gg/invite/2UcmM842h4"
         const val PROJECT_WIKI =
             "https://github.com/FrosSky/Chevstrap/wiki"
 
