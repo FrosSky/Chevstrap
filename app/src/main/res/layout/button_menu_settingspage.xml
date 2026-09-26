@@ -18,7 +18,7 @@
 		android:clickable="false"
 		android:focusable="false"
 		android:scaleType="center"
-		android:src="@drawable/nothing80" />
+		android:src="@drawable/nothing_real" />
 
 	<TextView
 		android:id="@+id/textview_name"
