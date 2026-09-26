@@ -58,12 +58,18 @@ class ActivityWatcher {
 
         val logLocation = File(execPath, "logs")
         if (!logLocation.exists() && !logLocation.mkdirs()) {
-            App.logger.writeLine(tag, "Failed to create log directory: ${logLocation.absolutePath}")
+            App.logger.writeLine(
+                tag,
+                "Failed to create log directory: ${logLocation.absolutePath}"
+            )
             App.isLastLogFoundOrMaybeNot = true
             return
         }
 
-        App.logger.writeLine(tag, "Watching logs from ${logLocation.absolutePath}")
+        App.logger.writeLine(
+            tag,
+            "Watching logs from ${logLocation.absolutePath}"
+        )
 
         var randomAccessFile: RandomAccessFile? = null
         var currentLogPath: String? = null
@@ -76,12 +82,16 @@ class ActivityWatcher {
                 currentLogPath = latestLog.absolutePath
                 randomAccessFile = RandomAccessFile(latestLog, "r")
                 randomAccessFile.seek(randomAccessFile.length())
+
                 App.logger.writeLine(
                     tag,
                     "Starting from EOF: ${latestLog.name} (${randomAccessFile.length()} bytes)"
                 )
             } else {
-                App.logger.writeLine(tag, "No existing Roblox log found. Waiting for a new log...")
+                App.logger.writeLine(
+                    tag,
+                    "No existing Roblox log found. Waiting for a new log..."
+                )
             }
 
             while (!isStopMonitoring) {
@@ -93,7 +103,11 @@ class ActivityWatcher {
                 }
 
                 if (currentLogPath != latestLog.absolutePath) {
-                    App.logger.writeLine(tag, "Detected new Roblox log: ${latestLog.name}")
+                    App.logger.writeLine(
+                        tag,
+                        "Detected new Roblox log: ${latestLog.name}"
+                    )
+
                     try {
                         randomAccessFile?.close()
                     } catch (_: IOException) {
@@ -102,7 +116,12 @@ class ActivityWatcher {
                     currentLogPath = latestLog.absolutePath
                     randomAccessFile = RandomAccessFile(latestLog, "r")
                     randomAccessFile.seek(0)
-                    App.logger.writeLine(tag, "Now watching: ${latestLog.name}")
+
+                    App.logger.writeLine(
+                        tag,
+                        "Now watching: ${latestLog.name}"
+                    )
+
                     continue
                 }
 
@@ -113,7 +132,10 @@ class ActivityWatcher {
                 }
 
                 if (randomAccessFile.length() < randomAccessFile.filePointer) {
-                    App.logger.writeLine(tag, "Log file was truncated. Resetting reader.")
+                    App.logger.writeLine(
+                        tag,
+                        "Log file was truncated. Resetting reader."
+                    )
                     randomAccessFile.seek(0)
                 }
 
@@ -135,21 +157,36 @@ class ActivityWatcher {
                     handleLogEntry(decodedLine)
                 }
 
-                if (!hasReadData) Thread.sleep(500)
+                if (!hasReadData) {
+                    Thread.sleep(500)
+                }
             }
         } catch (e: InterruptedException) {
             if (!isStopMonitoring) {
-                App.logger.writeLine(tag, "Activity watcher interrupted unexpectedly.")
+                App.logger.writeLine(
+                    tag,
+                    "Activity watcher interrupted unexpectedly."
+                )
                 App.logger.writeException(tag, e)
             } else {
-                App.logger.writeLine(tag, "Activity watcher stopped.")
+                App.logger.writeLine(
+                    tag,
+                    "Activity watcher stopped."
+                )
             }
+
             Thread.currentThread().interrupt()
         } catch (e: IOException) {
-            App.logger.writeLine(tag, "Failed to run activity watcher!")
+            App.logger.writeLine(
+                tag,
+                "Failed to run activity watcher!"
+            )
             App.logger.writeException(tag, e)
         } catch (e: Exception) {
-            App.logger.writeLine(tag, "Unexpected error in activity watcher!")
+            App.logger.writeLine(
+                tag,
+                "Unexpected error in activity watcher!"
+            )
             App.logger.writeException(tag, e)
         } finally {
             App.isLastLogFoundOrMaybeNot = true
@@ -166,7 +203,10 @@ class ActivityWatcher {
                         .thenBy { it.length() }
                 )
         } catch (e: Exception) {
-            App.logger.writeException("ActivityWatcher::getLatestLog", e)
+            App.logger.writeException(
+                "ActivityWatcher::getLatestLog",
+                e
+            )
             null
         }
     }
@@ -183,8 +223,9 @@ class ActivityWatcher {
         val placeId = activityData.placeId
 
         activityData.serverType = when {
-            rootPlaceId == 0L || placeId == 0L || rootPlaceId == placeId ->
-                ServerType.PUBLIC
+            rootPlaceId == 0L ||
+                    placeId == 0L ||
+                    rootPlaceId == placeId -> ServerType.PUBLIC
 
             else -> ServerType.RESERVED
         }
@@ -193,6 +234,48 @@ class ActivityWatcher {
             "ActivityWatcher::updateServerType",
             "Server type updated: rootPlaceId=$rootPlaceId, " +
                     "placeId=$placeId, serverType=${activityData.serverType}"
+        )
+    }
+
+    private fun addToHistory(activityData: ActivityData) {
+        val previous = history.lastOrNull()
+
+        if (
+            previous != null &&
+            previous.universeId == activityData.universeId &&
+            (
+                    previous.serverType == ServerType.RESERVED ||
+                            activityData.serverType == ServerType.RESERVED
+                    )
+        ) {
+            previous.timeJoined = listOfNotNull(
+                previous.timeJoined,
+                activityData.timeJoined
+            ).minOrNull()
+
+            previous.timeLeft = listOfNotNull(
+                previous.timeLeft,
+                activityData.timeLeft
+            ).maxOrNull()
+
+            App.logger.writeLine(
+                "ActivityWatcher::addToHistory",
+                "Merged reserved server into previous game history: " +
+                        "universeId=${activityData.universeId}"
+            )
+
+            return
+        }
+
+        history.add(activityData)
+
+        App.logger.writeLine(
+            "ActivityWatcher::addToHistory",
+            "Added game history: " +
+                    "serverType=${activityData.serverType}, " +
+                    "rootPlaceId=${activityData.rootPlaceId}, " +
+                    "placeId=${activityData.placeId}, " +
+                    "universeId=${activityData.universeId}"
         )
     }
 
@@ -212,7 +295,9 @@ class ActivityWatcher {
             !line.contains(bsRPC) &&
             !line.contains(leavingRoblox) &&
             !line.contains(universe)
-        ) return
+        ) {
+            return
+        }
 
         val activityData = data ?: return
 
@@ -229,14 +314,7 @@ class ActivityWatcher {
             ) {
                 activityData.timeLeft = Date()
                 updateServerType(activityData)
-                history.add(activityData)
-
-                App.logger.writeLine(
-                    tag,
-                    "Added activity to history: serverType=${activityData.serverType}, " +
-                            "rootPlaceId=${activityData.rootPlaceId}, " +
-                            "placeId=${activityData.placeId}"
-                )
+                addToHistory(activityData)
 
                 isInExperience = false
                 data = ActivityData("")
@@ -249,7 +327,10 @@ class ActivityWatcher {
                     }
                 }
 
-                if (isEnableRPC) discordRPC?.setCurrentGame()
+                if (isEnableRPC) {
+                    discordRPC?.setCurrentGame()
+                }
+
                 return
             }
 
@@ -265,19 +346,23 @@ class ActivityWatcher {
 
                     if (match != null) {
                         val jobId = match.groupValues[1].trim()
-                        val placeId = match.groupValues[2].trim().toLongOrNull()
+                        val placeId = match.groupValues[2]
+                            .trim()
+                            .toLongOrNull()
                         val serverIP = match.groupValues[3].trim()
 
                         if (jobId.isNotEmpty() && placeId != null) {
                             App.logger.writeLine(
                                 tag,
-                                "Joining game: placeId=$placeId, jobId=$jobId, serverIP=$serverIP"
+                                "Joining game: placeId=$placeId, " +
+                                        "jobId=$jobId, serverIP=$serverIP"
                             )
 
                             isInExperience = true
                             activityData.timeJoined = Date()
                             activityData.placeId = placeId
                             activityData.jobId = jobId
+
                             updateServerType(activityData)
                         } else {
                             App.logger.writeLine(
@@ -319,7 +404,11 @@ class ActivityWatcher {
                             .trim()
 
                         if (location.isNotEmpty()) {
-                            App.logger.writeLine(tag, "Connection string: $line")
+                            App.logger.writeLine(
+                                tag,
+                                "Connection string: $line"
+                            )
+
                             activityData.machineAddress = location
 
                             if (
@@ -395,24 +484,33 @@ class ActivityWatcher {
                         line.substring(userStart, userEnd)
                             .trim()
                             .toLongOrNull()
-                            ?.let { activityData.userId = it }
+                            ?.let {
+                                activityData.userId = it
+                            }
                     }
 
                     val universeIndex = line.indexOf("universeid:")
 
                     if (universeIndex != -1) {
-                        val universeStart = universeIndex + "universeid:".length
-                        val universeEnd = line.indexOf(",", universeStart)
-                            .takeIf { it != -1 }
-                            ?: line.length
+                        val universeStart =
+                            universeIndex + "universeid:".length
 
-                        line.substring(universeStart, universeEnd)
+                        val universeEnd = line.indexOf(
+                            ",",
+                            universeStart
+                        ).takeIf { it != -1 } ?: line.length
+
+                        line.substring(
+                            universeStart,
+                            universeEnd
+                        )
                             .trim()
                             .toLongOrNull()
                             ?.let { universeId ->
                                 activityData.setUniverseId(universeId) { success ->
                                     if (success) {
                                         updateServerType(activityData)
+
                                         if (isEnableRPC) {
                                             discordRPC?.setCurrentGame()
                                         }
@@ -432,9 +530,14 @@ class ActivityWatcher {
             }
 
             if (line.contains(bsRPC) && isInExperience) {
-                if (!App.config.data.discordAllowCustomPresence) return
+                if (!App.config.data.discordAllowCustomPresence) {
+                    return
+                }
 
-                val jsonStart = line.indexOf("{", line.indexOf(bsRPC))
+                val jsonStart = line.indexOf(
+                    "{",
+                    line.indexOf(bsRPC)
+                )
 
                 if (jsonStart == -1) {
                     App.logger.writeLine(
@@ -446,22 +549,32 @@ class ActivityWatcher {
                 }
 
                 val messagePlain = line.substring(jsonStart).trim()
-                App.logger.writeLine(tag, "Received message: '$messagePlain'")
+
+                App.logger.writeLine(
+                    tag,
+                    "Received message: '$messagePlain'"
+                )
 
                 try {
                     if (isEnableRPC) {
-                        discordRPC?.processRPCMessage(JSONObject(messagePlain))
+                        discordRPC?.processRPCMessage(
+                            JSONObject(messagePlain)
+                        )
                     }
                 } catch (e: Exception) {
                     App.logger.writeLine(
                         tag,
-                        "Failed to parse message! (JSON deserialization threw an exception)"
+                        "Failed to parse message! " +
+                                "(JSON deserialization threw an exception)"
                     )
                     App.logger.writeException(tag, e)
                 }
             }
         } catch (e: Exception) {
-            App.logger.writeLine(tag, "Failed to handle log entry")
+            App.logger.writeLine(
+                tag,
+                "Failed to handle log entry"
+            )
             App.logger.writeException(tag, e)
         }
     }
@@ -472,15 +585,27 @@ class ActivityWatcher {
 
     fun dispose() {
         val tag = "ActivityWatcher::dispose"
-        if (isStopMonitoring) return
+
+        if (isStopMonitoring) {
+            return
+        }
 
         isStopMonitoring = true
-        App.logger.writeLine(tag, "Disposing activity watcher session")
+
+        App.logger.writeLine(
+            tag,
+            "Disposing activity watcher session"
+        )
 
         try {
-            if (isEnableRPC) discordRPC?.dispose()
+            if (isEnableRPC) {
+                discordRPC?.dispose()
+            }
         } catch (e: Exception) {
-            App.logger.writeLine(tag, "Failed to dispose Discord RPC.")
+            App.logger.writeLine(
+                tag,
+                "Failed to dispose Discord RPC."
+            )
             App.logger.writeException(tag, e)
         }
 
@@ -493,7 +618,10 @@ class ActivityWatcher {
         }
 
         watcherScope.cancel()
-        if (!executor.isShutdown) executor.shutdownNow()
+
+        if (!executor.isShutdown) {
+            executor.shutdownNow()
+        }
     }
 
     fun runWatcher() {
@@ -515,10 +643,15 @@ class ActivityWatcher {
             return
         }
 
-        App.logger.writeLine(tag, "Starting activity watcher session")
+        App.logger.writeLine(
+            tag,
+            "Starting activity watcher session"
+        )
 
         try {
-            executor.submit { start() }
+            executor.submit {
+                start()
+            }
         } catch (e: Exception) {
             App.logger.writeLine(
                 tag,
