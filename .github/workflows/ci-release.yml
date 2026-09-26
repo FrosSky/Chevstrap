@@ -63,10 +63,10 @@ jobs:
             exit 1
           fi
 
-          chmod +x "$APKSIGNER"
-
           echo "APKSIGNER=$APKSIGNER" >> "$GITHUB_ENV"
-          echo "Using apksigner: $APKSIGNER"
+
+          echo "Using apksigner:"
+          "$APKSIGNER" --version
 
       - name: Build Release APK
         run: |
