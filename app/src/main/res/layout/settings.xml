@@ -40,7 +40,7 @@
 					android:layout_marginEnd="5dp"
 					android:background="@drawable/chevstrap_icon"
 					android:scaleType="center"
-					android:src="@drawable/nothing80" />
+					android:src="@drawable/nothing_real" />
 
 				<TextView
 					android:id="@+id/textview1"
