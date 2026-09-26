@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	android:id="@+id/linear1"
@@ -8,14 +7,12 @@
 	android:padding="15dp"
 	android:background="#060606"
 	android:orientation="vertical">
-
 	<LinearLayout
 		android:id="@+id/linear11"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:padding="3dp"
 		android:orientation="vertical">
-
 		<LinearLayout
 			android:id="@+id/linear_up_main"
 			android:layout_width="match_parent"
@@ -23,42 +20,43 @@
 			android:padding="0dp"
 			android:gravity="start"
 			android:orientation="horizontal">
-
 			<LinearLayout
 				android:id="@+id/linear_center_hm0"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="start"
 				android:orientation="horizontal" />
-
 			<LinearLayout
 				android:id="@+id/linear_center_hm1"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="start"
 				android:layout_marginBottom="10dp"
-				android:orientation="horizontal">
-
+				android:orientation="vertical">
 				<TextView
-					android:id="@+id/textview_is_desc"
+					android:id="@+id/textview_is_title"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="@string/context_menu_game_history_title"
-					android:textSize="11sp"
+					android:textSize="12sp"
 					android:layout_marginEnd="10dp"
 					android:textColor="#E0E0E0" />
-
+				<TextView
+					android:id="@+id/textview_is_description"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:textSize="11sp"
+					android:layout_marginTop="2dp"
+					android:layout_marginEnd="10dp"
+					android:textColor="#AAAAAA" />
 			</LinearLayout>
-
 			<LinearLayout
 				android:id="@+id/linear_center_hm2"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:gravity="start"
 				android:orientation="horizontal" />
-
 		</LinearLayout>
-
 		<LinearLayout
 			android:id="@+id/linear_for_listview"
 			android:layout_width="match_parent"
@@ -66,16 +64,13 @@
 			android:gravity="top"
 			android:background="@android:color/transparent"
 			android:orientation="horizontal">
-
 			<ListView
 				android:id="@+id/listview"
 				android:layout_width="match_parent"
 				android:layout_height="match_parent"
 				android:padding="0dp"
 				android:choiceMode="none" />
-
 		</LinearLayout>
-
 		<LinearLayout
 			android:id="@+id/linear_actual_middle"
 			android:layout_width="match_parent"
@@ -83,7 +78,6 @@
 			android:padding="0dp"
 			android:gravity="center"
 			android:orientation="horizontal" />
-
 		<LinearLayout
 			android:id="@+id/linear_bottom_main"
 			android:layout_width="match_parent"
@@ -91,7 +85,6 @@
 			android:padding="0dp"
 			android:orientation="horizontal"
 			android:gravity="end">
-
 			<LinearLayout
 				android:id="@+id/linear_bottom_list"
 				android:layout_width="wrap_content"
@@ -99,9 +92,6 @@
 				android:padding="8dp"
 				android:orientation="horizontal"
 				android:gravity="end" />
-
 		</LinearLayout>
-
 	</LinearLayout>
-
 </LinearLayout>
