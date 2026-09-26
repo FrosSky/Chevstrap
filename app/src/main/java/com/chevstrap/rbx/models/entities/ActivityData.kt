@@ -18,6 +18,7 @@ import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import java.net.URLEncoder
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -146,22 +147,29 @@ class ActivityData(machineAddress: String? = "") {
             App.logger.writeLine(LOG_IDENTIFIER, "Machine address valid = $valid")
             return valid
         }
-
+    
     val gameHistoryDescription: String
         get() {
-            val locale = Locale.getDefault()
-            val timeFormat = SimpleDateFormat("h:mm a", locale)
+            val timeFormat = DateFormat.getTimeInstance(
+                DateFormat.SHORT,
+                Locale.getDefault()
+            )
 
-            val creatorName = universeDetails?.data?.creator?.name ?: ""
+            val creatorName = universeDetails?.data?.creator?.name.orEmpty()
 
-            val joinedText = timeJoined?.let { timeFormat.format(it) } ?: "N/A"
-            val leftText = timeLeft?.let { timeFormat.format(it) } ?: "N/A"
+            val joinedText = timeJoined?.let(timeFormat::format) ?: "N/A"
+            val leftText = timeLeft?.let(timeFormat::format) ?: "N/A"
 
-            val separator = if (locale.language.startsWith("ja")) "~" else "-"
-            val desc = "$creatorName • $joinedText $separator $leftText"
+            val desc = "$creatorName • $joinedText - $leftText"
 
-            App.logger.writeLine(LOG_IDENTIFIER, "Game history description generated: $desc")
-            App.logger.writeLine(LOG_IDENTIFIER, "Creator name: $creatorName")
+            App.logger.writeLine(
+                LOG_IDENTIFIER,
+                "Game history description generated: $desc"
+            )
+            App.logger.writeLine(
+                LOG_IDENTIFIER,
+                "Creator name: $creatorName"
+            )
 
             return desc
         }
