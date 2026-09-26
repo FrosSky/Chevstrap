@@ -137,6 +137,14 @@ class ServerHistoryFragment : DialogFragment() {
             }
         )
 
+        description.setTextColor(
+            if (light) {
+                Color.parseColor("#E0E0E0")
+            } else {
+                Color.parseColor("#202020")
+            }
+        )
+
         val listBackground = GradientDrawable().apply {
             cornerRadius = 20f
             setColor("#070707".toColorInt())
