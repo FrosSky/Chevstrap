@@ -185,6 +185,7 @@ class RobloxDiscordRPC(private val activityWatcher: ActivityWatcher) {
         }
 
         if (!activityWatcher.isInExperienceState()) {
+            customMessageRPC = null
             currentPresence = null
             currentGameStartTime = null
             updatePresence()
