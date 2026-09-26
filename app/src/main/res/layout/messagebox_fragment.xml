@@ -35,7 +35,7 @@
 				android:layout_height="70dp"
 				android:background="@drawable/warning_icon"
                 android:contentDescription="@string/common_warning"
-                android:src="@drawable/nothing80"
+                android:src="@drawable/nothing_real"
 				android:scaleType="center" />
 			<TextView
 				android:id="@+id/textview3"
