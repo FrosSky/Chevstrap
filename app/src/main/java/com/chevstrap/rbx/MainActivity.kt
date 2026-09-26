@@ -104,7 +104,6 @@ class MainActivity : AppCompatActivity() {
             try {
                 val path =
                     robloxData.getRobloxDirectory(false)
-
                 if (path.isNullOrEmpty()) {
                     false
                 } else {
@@ -125,7 +124,7 @@ class MainActivity : AppCompatActivity() {
                     App.appContext,
                     R.string.dialog_access_to_roblox_directories_is_blocked
                 ) +
-                        " [https://github.com/FrosSky/Chevstrap/wiki/Access-to-Roblox-directories-is-blocked](https://github.com/FrosSky/Chevstrap/wiki/Access-to-Roblox-directories-is-blocked)",
+                        " " + "https://github.com/FrosSky/Chevstrap/wiki/Access-to-Roblox-directories-is-blocked",
                 false,
                 { finish() },
                 null
