@@ -27,7 +27,7 @@ import com.chevstrap.rbx.ui.components.ComponentUtils
 import com.chevstrap.rbx.ui.components.holders.SmallButtonResult
 import com.chevstrap.rbx.ui.viewModels.customDialogs.LogExplorerViewModel
 import java.io.File
-import java.text.SimpleDateFormat
+import java.text.DateFormat
 import java.util.Date
 import java.util.Locale
 
@@ -112,7 +112,7 @@ class LogExplorerFragment : DialogFragment() {
         )
 
         val title = view.findViewById<TextView>(
-            R.id.textview_is_title
+            R.id.textview_is_desc
         )
 
         val bottomLayout = view.findViewById<LinearLayout>(
@@ -321,7 +321,7 @@ class LogExplorerFragment : DialogFragment() {
                 formatFileInfo(file)
 
             holder.imageViewThumbnail.setImageResource(
-                R.drawable.just_a_blank
+                R.drawable.blank90x90
             )
 
             holder.imageViewThumbnail.setBackgroundColor(
@@ -514,17 +514,14 @@ class LogExplorerFragment : DialogFragment() {
             return null
         }
 
-        private fun formatFileInfo(
-            file: File
-        ): String {
-            val sdf = SimpleDateFormat(
-                "dd MMM yyyy, HH:mm",
-                Locale.getDefault()
-            )
-
-            return sdf.format(
-                Date(file.lastModified())
-            )
+        private fun formatFileInfo(file: File): String {
+            return DateFormat
+                .getDateTimeInstance(
+                    DateFormat.MEDIUM,
+                    DateFormat.SHORT,
+                    Locale.getDefault()
+                )
+                .format(Date(file.lastModified()))
         }
     }
 
