@@ -89,7 +89,12 @@ class ServerHistoryFragment : DialogFragment() {
 
         val title =
             view.findViewById<TextView>(
-                R.id.textview_is_desc
+                R.id.textview_is_title
+            )
+
+        val description =
+            view.findViewById<TextView>(
+                R.id.textview_is_description
             )
 
         val bottomLayout =
@@ -100,7 +105,13 @@ class ServerHistoryFragment : DialogFragment() {
         title.text =
             ResourceManagerEx.getStringOrEmpty(
                 requireContext(),
-                R.string.common_close
+                R.string.context_menu_game_history_title
+            )
+
+        description.text =
+            ResourceManagerEx.getStringOrEmpty(
+                requireContext(),
+                R.string.context_menu_game_history_description
             )
 
         val buttonClose = addButton(
