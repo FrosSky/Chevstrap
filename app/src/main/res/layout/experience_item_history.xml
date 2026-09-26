@@ -30,7 +30,7 @@
 				android:id="@+id/imageview_thumbnail"
 				android:layout_width="90dp"
 				android:layout_height="90dp"
-				android:src="@drawable/nothing80"
+				android:src="@drawable/nothing_real"
 				android:layout_marginEnd="10dp"
 				android:scaleType="center" />
 
