@@ -76,6 +76,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
+
         settingsScreen
             .getContentContainer()
 
@@ -101,7 +102,9 @@ class SettingsActivity : AppCompatActivity() {
     private fun launchClient() {
 
         try {
+
             App.config.save()
+
             val args = arrayOf("-client")
 
             val launchSettings =
@@ -160,26 +163,16 @@ class SettingsActivity : AppCompatActivity() {
             settingsScreen.updateTheme(value) {
                 refreshCurrentPage()
             }
-
-            App.config.checkForChanges()
         }
 
         App.config.listen(ConfigData::backgroundImageUri) { value ->
             settingsScreen.refreshLinear27 {
-                refreshCurrentPage()
-            }
-
-            if (
-                value.isNotEmpty()
-            ) {
-                try {
-                    settingsScreen.updateTheme(
-                        App.config.data.appThemeInApp
-                    ) {
+                if (value.isNotEmpty()) {
+                    settingsScreen.updateTheme(App.config.data.appThemeInApp) {
                         refreshCurrentPage()
-                        App.config.checkForChanges()
                     }
-                } catch (_: Exception) {
+                } else {
+                    refreshCurrentPage()
                 }
             }
         }
@@ -387,6 +380,7 @@ class SettingsActivity : AppCompatActivity() {
                         ?: return@registerForActivityResult
 
                 App.config.data.backgroundImageUri = path
+                App.config.checkForChanges()
             }
     }
 
