@@ -28,25 +28,68 @@ jobs:
           java-version: '17'
           cache: gradle
 
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android Build Tools
+        run: |
+          sdkmanager "platform-tools" "build-tools;35.0.0"
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v5
 
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
+      - name: Decode signing key
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
+        run: |
+          echo "$SIGNING_KEY" | base64 --decode > "$RUNNER_TEMP/key-chevstrap.jks"
+
       - name: Build Release APK
         run: ./gradlew :app:assembleRelease --stacktrace
 
-      - name: Sign app APK
-        uses: ilharp/sign-android-release@nightly
-        with:
-          releaseDir: app/build/outputs/apk/release
-          signingKey: ${{ secrets.SIGNING_KEY }}
-          keyAlias: ${{ secrets.ALIAS }}
-          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
-          keyPassword: ${{ secrets.KEY_PASSWORD }}
+      - name: Sign Release APKs
+        env:
+          ALIAS: ${{ secrets.ALIAS }}
+          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: |
+          APKSIGNER="$ANDROID_HOME/build-tools/35.0.0/apksigner"
 
-      - name: Upload Release APK
+          find app/build/outputs/apk/release -type f -name "*.apk" -print0 |
+          while IFS= read -r -d '' APK; do
+            echo "Signing: $APK"
+
+            "$APKSIGNER" sign \
+              --ks "$RUNNER_TEMP/key-chevstrap.jks" \
+              --ks-key-alias "$ALIAS" \
+              --ks-pass "pass:$KEY_STORE_PASSWORD" \
+              --key-pass "pass:$KEY_PASSWORD" \
+              "$APK"
+          done
+
+      - name: Verify APK signatures
+        run: |
+          APKSIGNER="$ANDROID_HOME/build-tools/35.0.0/apksigner"
+
+          find app/build/outputs/apk/release -type f -name "*.apk" -print0 |
+          while IFS= read -r -d '' APK; do
+            echo "Verifying: $APK"
+            "$APKSIGNER" verify --verbose "$APK"
+          done
+
+      - name: Rename signed APKs
+        run: |
+          find app/build/outputs/apk/release -type f -name "*.apk" -print0 |
+          while IFS= read -r -d '' APK; do
+            if [[ "$APK" != *"-signed.apk" ]]; then
+              mv "$APK" "${APK%.apk}-signed.apk"
+            fi
+          done
+
+      - name: Upload Release APKs
         uses: actions/upload-artifact@v5
         with:
           name: Chevstrap (Release)
