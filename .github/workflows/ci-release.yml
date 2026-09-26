@@ -137,9 +137,14 @@ jobs:
                 ;;
             esac
 
-            SIGNED_APK="${APK%.apk}-signed.apk"
+            APK_NAME="$(basename "$APK")"
+            APK_NAME="${APK_NAME%-unsigned.apk}"
+            APK_NAME="${APK_NAME%.apk}.apk"
+
+            SIGNED_APK="app/build/outputs/apk/release/$APK_NAME"
 
             echo "Signing: $APK"
+            echo "Output: $SIGNED_APK"
 
             "$APKSIGNER" sign \
               --ks "$KEYSTORE" \
@@ -164,6 +169,6 @@ jobs:
         uses: actions/upload-artifact@v6
         with:
           name: Chevstrap (Release)
-          path: app/build/outputs/apk/release/*-signed.apk
+          path: app/build/outputs/apk/release/*.apk
           if-no-files-found: error
           retention-days: 14
