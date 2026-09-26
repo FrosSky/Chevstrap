@@ -76,7 +76,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setupButtons() {
-
         settingsScreen
             .getContentContainer()
 
@@ -102,9 +101,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun launchClient() {
 
         try {
-
             App.config.save()
-
             val args = arrayOf("-client")
 
             val launchSettings =
@@ -180,8 +177,8 @@ class SettingsActivity : AppCompatActivity() {
                         App.config.data.appThemeInApp
                     ) {
                         refreshCurrentPage()
+                        App.config.checkForChanges()
                     }
-                    App.config.checkForChanges()
                 } catch (_: Exception) {
                 }
             }
