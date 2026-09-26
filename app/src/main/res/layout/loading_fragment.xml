@@ -24,7 +24,7 @@
 			android:layout_marginEnd="8dp"
 			android:background="@drawable/chevstrap_icon"
 			android:scaleType="centerInside"
-			android:src="@drawable/nothing80" />
+			android:src="@drawable/nothing_real" />
 		<LinearLayout
 			android:id="@+id/linear4"
 			android:layout_width="0dp"
