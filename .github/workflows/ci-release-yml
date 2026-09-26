@@ -1,4 +1,4 @@
-name: CI (Debug)
+name: CI (Release)
 
 on:
   workflow_dispatch:
@@ -34,13 +34,22 @@ jobs:
       - name: Make Gradle executable
         run: chmod +x ./gradlew
 
-      - name: Build Debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+      - name: Build Release APK
+        run: ./gradlew :app:assembleRelease --stacktrace
 
-      - name: Upload Debug APK
+      - name: Sign app APK
+        uses: ilharp/sign-android-release@nightly
+        with:
+          releaseDir: app/build/outputs/apk/release
+          signingKey: ${{ secrets.SIGNING_KEY }}
+          keyAlias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+
+      - name: Upload Release APK
         uses: actions/upload-artifact@v5
         with:
-          name: Chevstrap (Debug)
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: Chevstrap (Release)
+          path: app/build/outputs/apk/release/*-signed.apk
           if-no-files-found: error
           retention-days: 14
