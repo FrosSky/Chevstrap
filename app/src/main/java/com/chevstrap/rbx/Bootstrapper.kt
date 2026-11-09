@@ -270,36 +270,55 @@ class Bootstrapper(
     private fun isRobloxModified(context: Context): Boolean {
         val log = "Bootstrapper::isRobloxModified"
         val pkg = packageName ?: return false
-
+        
         return try {
-            val source = File(
-                context.packageManager
-                    .getApplicationInfo(pkg, 0)
-                    .sourceDir
-            )
+        val source = File(
+            context.packageManager
+                .getApplicationInfo(pkg, 0)
+                .sourceDir
+        )
 
-            if (!source.exists()) return false
+        if (!source.exists()) return false
 
-            ZipFile(source).use { zip ->
-                Collections.list(zip.entries()).any {
-                    it.name.startsWith("lib/")
-                }.also {
-                    if (it) {
-                        App.logger.writeLine(
-                            log,
-                            "Roblox modification detected"
-                        )
-                    }
-                }
+        ZipFile(source).use { zip ->
+            val entries = Collections.list(zip.entries())
+
+            val hasLibs = entries.any { entry ->
+                entry.name.startsWith("lib/")
             }
-        } catch (e: Exception) {
+
+            val hasArmeabiV7a = entries.any { entry ->
+                entry.name.startsWith("lib/armeabi-v7a/")
+            }
+
+            val modified = hasLibs && !hasArmeabiV7a
+
             App.logger.writeLine(
                 log,
-                "Failed to check Roblox modification"
+                "hasLibs=$hasLibs | hasArmeabiV7a=$hasArmeabiV7a | modified=$modified"
             )
-            App.logger.writeException(log, e)
-            false
+
+            if (modified) {
+                App.logger.writeLine(
+                    log,
+                    "Roblox modification detected: lib/ exists without lib/armeabi-v7a/"
+                )
+            } else {
+                App.logger.writeLine(
+                    log,
+                    "No Roblox modification detected"
+                )
+            }
+
+            modified
         }
+    } catch (e: Exception) {
+        App.logger.writeLine(
+            log,
+            "Failed to check Roblox modification"
+        )
+        App.logger.writeException(log, e)
+        false
     }
 
     private fun applyChanges(): Boolean {
