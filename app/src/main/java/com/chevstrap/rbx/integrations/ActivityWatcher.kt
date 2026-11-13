@@ -7,10 +7,6 @@ import com.chevstrap.rbx.appDirectories.RobloxClientData
 import com.chevstrap.rbx.enums.ServerType
 import com.chevstrap.rbx.models.entities.ActivityData
 import com.chevstrap.rbx.ui.NotifyIconWrapper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.cancel
 import org.json.JSONObject
 import java.io.File
 import java.io.IOException
@@ -23,8 +19,6 @@ import kotlin.concurrent.Volatile
 class ActivityWatcher {
 
     private val executor: ExecutorService = Executors.newSingleThreadExecutor()
-    private val watcherScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
-
     val history: MutableList<ActivityData?> = ArrayList()
 
     private var discordRPC: RobloxDiscordRPC? = null
@@ -39,6 +33,7 @@ class ActivityWatcher {
     @Volatile
     var isEnableRPC = false
 
+    @Volatile
     @JvmField
     var data: ActivityData? = null
 
@@ -113,22 +108,45 @@ class ActivityWatcher {
                     } catch (_: IOException) {
                     }
 
-                    currentLogPath = latestLog.absolutePath
-                    randomAccessFile = RandomAccessFile(latestLog, "r")
-                    randomAccessFile.seek(0)
+                    try {
+                        val newLogFile = RandomAccessFile(latestLog, "r")
+                        newLogFile.seek(0)
 
-                    App.logger.writeLine(
-                        tag,
-                        "Now watching: ${latestLog.name}"
-                    )
+                        randomAccessFile = newLogFile
+                        currentLogPath = latestLog.absolutePath
+
+                        App.logger.writeLine(
+                            tag,
+                            "Now watching: ${latestLog.name}"
+                        )
+                    } catch (e: IOException) {
+                        App.logger.writeLine(
+                            tag,
+                            "Failed to open new Roblox log: ${latestLog.absolutePath}"
+                        )
+                        App.logger.writeException(tag, e)
+                        Thread.sleep(500)
+                    }
 
                     continue
                 }
 
                 if (randomAccessFile == null) {
-                    randomAccessFile = RandomAccessFile(latestLog, "r")
-                    randomAccessFile.seek(randomAccessFile.length())
-                    currentLogPath = null
+                    try {
+                        val newLogFile = RandomAccessFile(latestLog, "r")
+                        newLogFile.seek(newLogFile.length())
+
+                        randomAccessFile = newLogFile
+                        currentLogPath = latestLog.absolutePath
+                    } catch (e: IOException) {
+                        App.logger.writeLine(
+                            tag,
+                            "Failed to reopen Roblox log: ${latestLog.absolutePath}"
+                        )
+                        App.logger.writeException(tag, e)
+                        Thread.sleep(500)
+                        continue
+                    }
                 }
 
                 if (randomAccessFile.length() < randomAccessFile.filePointer) {
@@ -236,6 +254,34 @@ class ActivityWatcher {
                     "placeId=$placeId, serverType=${activityData.serverType}"
         )
     }
+    
+    @Synchronized
+    private fun finishActiveActivity() {
+        val activityData = data ?: return
+
+        if (!isInExperience || activityData.placeId == 0L) {
+            return
+        }
+
+        activityData.timeLeft = Date()
+        updateServerType(activityData)
+        addToHistory(activityData)
+
+        isInExperience = false
+        data = ActivityData("")
+
+        App.appContext?.let {
+            NotifyIconWrapper.hideConnectionNotification(it)
+
+            if (isEnableRPC) {
+                NotifyIconWrapper.hideDiscordRpcVisibilityNotification(it)
+            }
+        }
+
+        if (isEnableRPC) {
+            discordRPC?.setCurrentGame()
+        }
+    }
 
     private fun addToHistory(activityData: ActivityData) {
         val previous = history.lastOrNull()
@@ -302,7 +348,8 @@ class ActivityWatcher {
         val activityData = data ?: return
 
         try {
-            if (!isInExperience && line.contains(leavingRoblox)) {
+            if (line.contains(leavingRoblox)) {
+                finishActiveActivity()
                 dispose()
                 return
             }
@@ -312,25 +359,7 @@ class ActivityWatcher {
                 activityData.placeId != 0L &&
                 line.contains(leaveServer)
             ) {
-                activityData.timeLeft = Date()
-                updateServerType(activityData)
-                addToHistory(activityData)
-
-                isInExperience = false
-                data = ActivityData("")
-
-                App.appContext?.let {
-                    NotifyIconWrapper.hideConnectionNotification(it)
-
-                    if (isEnableRPC) {
-                        NotifyIconWrapper.hideDiscordRpcVisibilityNotification(it)
-                    }
-                }
-
-                if (isEnableRPC) {
-                    discordRPC?.setCurrentGame()
-                }
-
+                finishActiveActivity()
                 return
             }
 
@@ -411,10 +440,7 @@ class ActivityWatcher {
 
                             activityData.machineAddress = location
 
-                            if (
-                                activityData.machineAddress.isNullOrEmpty() ||
-                                activityData.universeId.toULong() == 0UL
-                            ) {
+                            if (activityData.universeId.toULong() == 0UL) {
                                 App.logger.writeLine(
                                     tag,
                                     "Failed to parse connection string: $line"
@@ -508,7 +534,12 @@ class ActivityWatcher {
                             .toLongOrNull()
                             ?.let { universeId ->
                                 activityData.setUniverseId(universeId) { success ->
-                                    if (success) {
+                                    // Ignore callbacks belonging to an older game session.
+                                    if (
+                                        success &&
+                                        isInExperience &&
+                                        data === activityData
+                                    ) {
                                         updateServerType(activityData)
 
                                         if (isEnableRPC) {
@@ -590,6 +621,7 @@ class ActivityWatcher {
             return
         }
 
+        finishActiveActivity()
         isStopMonitoring = true
 
         App.logger.writeLine(
@@ -616,8 +648,6 @@ class ActivityWatcher {
                 NotifyIconWrapper.hideDiscordRpcVisibilityNotification(it)
             }
         }
-
-        watcherScope.cancel()
 
         if (!executor.isShutdown) {
             executor.shutdownNow()
