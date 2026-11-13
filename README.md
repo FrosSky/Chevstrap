@@ -56,7 +56,6 @@ git clone https://github.com/FrosSky/Chevstrap.git
 - Import the project
 - Click on Build and Run
 
-
 ## F.A.Q
 
 #### Q: Is this a malware?
