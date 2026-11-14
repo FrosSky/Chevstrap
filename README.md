@@ -4,8 +4,8 @@
 <div align="center">
 
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/a3e4f927-badf-49ff-83f3-027f4be3e293#gh-light-mode-only" width="380">
-    <img src="https://github.com/user-attachments/assets/21a63f5f-0019-4917-bbc5-3ddaa9587df9#gh-dark-mode-only" width="380">
+    <img src="https://github.com/FrosSky/Chevstrap/blob/main/images/Chevstrap-for-Light-Theme.png#gh-light-mode-only" width="380">
+    <img src="https://github.com/FrosSky/Chevstrap/blob/main/images/Chevstrap-for-Dark-Theme.png#gh-dark-mode-only" width="380">
 </p>
 
 [![License][badge-repo-license]][repo-license]
