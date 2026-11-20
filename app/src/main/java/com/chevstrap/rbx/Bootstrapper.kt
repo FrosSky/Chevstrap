@@ -320,6 +320,7 @@ class Bootstrapper(
         App.logger.writeException(log, e)
         false
     }
+    }
 
     private fun applyChanges(): Boolean {
         val log = "Bootstrapper::applyChanges"

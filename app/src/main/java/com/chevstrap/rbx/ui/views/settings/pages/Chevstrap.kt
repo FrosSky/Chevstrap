@@ -3,7 +3,9 @@ package com.chevstrap.rbx.ui.views.settings.pages
 import android.content.Context
 import android.widget.LinearLayout
 import com.chevstrap.rbx.App
+import com.chevstrap.rbx.FastFlagsDialog
 import com.chevstrap.rbx.R
+import com.chevstrap.rbx.SettingsActivity
 import com.chevstrap.rbx.enums.ThemeRecreated
 import com.chevstrap.rbx.extensions.ResourceManagerEx
 import com.chevstrap.rbx.ui.viewModels.MethodAction
@@ -46,6 +48,34 @@ object Chevstrap {
                 )
             },
             1
+        )
+
+        fragment.addSection(
+            parentLayout,
+            ResourceManagerEx.getStringOrEmpty(
+                context,
+                R.string.fast_flags_title
+            )
+        )
+
+        fragment.addButton(
+            ResourceManagerEx.getStringOrEmpty(
+                context,
+                R.string.fast_flags_editor_title
+            ),
+            ResourceManagerEx.getStringOrEmpty(
+                context,
+                R.string.fast_flags_editor_description
+            ),
+            MethodAction {
+                val activity = App.savedSettingsActivity as? SettingsActivity
+                FastFlagsDialog.show(
+                    activity,
+                    onImport = { activity?.launchFastFlagsImport() },
+                    onExport = { activity?.launchFastFlagsExport() }
+                )
+            },
+            -1
         )
 
         fragment.addButton(

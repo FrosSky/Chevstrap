@@ -29,6 +29,7 @@ Would you like to join our community server?
 - A practical Discord Rich Presence feature that lets your friends know which Roblox game you're currently playing. However, it uses a Discord Gateway connection, **Use this at your own risk.**
 - See where your server is currently located (via [ipinfo.io](https://ipinfo.io/) API).
 - Game History lets you view games you've previously played and return to the same Roblox server, unless the server has expired, is no longer available, or is a reserved server that cannot be rejoined.
+- Fast Flags can be edited and exported as `ClientAppSettings.json`. The generated file is stored in Chevstrap's private app storage; delivery to Roblox, including Roblox running inside a Virtual Space, is not verified.
 
 ## Installation
 

@@ -8,7 +8,9 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts.CreateDocument
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.activity.result.contract.ActivityResultContracts.OpenDocument
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -28,6 +30,8 @@ import com.chevstrap.rbx.utility.AppPermissions
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
+import org.json.JSONObject
 
 class SettingsActivity : AppCompatActivity() {
     private lateinit var viewModel: SettingsScreenViewModel
@@ -35,6 +39,8 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var settingsScreen: SettingsScreen
 
     lateinit var imagePickerLauncher: ActivityResultLauncher<String>
+    private lateinit var fastFlagsImportLauncher: ActivityResultLauncher<Array<String>>
+    private lateinit var fastFlagsExportLauncher: ActivityResultLauncher<String>
 
     private val wideScreenWidthDp = 600
 
@@ -66,6 +72,7 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         registerImagePicker()
+        registerFastFlagsPickers()
         setupBackButton()
     }
 
@@ -378,6 +385,77 @@ class SettingsActivity : AppCompatActivity() {
                 App.config.data.backgroundImageUri = path
                 App.config.checkForChanges()
             }
+    }
+
+    private fun registerFastFlagsPickers() {
+        fastFlagsImportLauncher =
+            registerForActivityResult(OpenDocument()) { uri ->
+                if (uri == null) {
+                    return@registerForActivityResult
+                }
+
+                try {
+                    val input = contentResolver.openInputStream(uri)
+                        ?: throw IOException("Could not open the selected JSON file")
+                    val json = input.bufferedReader(Charsets.UTF_8).use {
+                        JSONObject(it.readText())
+                    }
+                    FastFlagsManager.import(json)
+                    Toast.makeText(
+                        this,
+                        R.string.fast_flags_import_succeeded,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    App.logger.writeException("SettingsActivity::importFastFlags", e)
+                    Toast.makeText(
+                        this,
+                        getString(
+                            R.string.fast_flags_operation_failed,
+                            e.message ?: e.javaClass.simpleName
+                        ),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+
+        fastFlagsExportLauncher =
+            registerForActivityResult(CreateDocument("application/json")) { uri ->
+                if (uri == null) {
+                    return@registerForActivityResult
+                }
+
+                try {
+                    val output = contentResolver.openOutputStream(uri, "wt")
+                        ?: throw IOException("Could not open the selected export destination")
+                    output.writer(Charsets.UTF_8).use {
+                        it.write(FastFlagsManager.export())
+                    }
+                    Toast.makeText(
+                        this,
+                        R.string.fast_flags_export_succeeded,
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } catch (e: Exception) {
+                    App.logger.writeException("SettingsActivity::exportFastFlags", e)
+                    Toast.makeText(
+                        this,
+                        getString(
+                            R.string.fast_flags_operation_failed,
+                            e.message ?: e.javaClass.simpleName
+                        ),
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+    }
+
+    fun launchFastFlagsImport() {
+        fastFlagsImportLauncher.launch(arrayOf("application/json", "text/json"))
+    }
+
+    fun launchFastFlagsExport() {
+        fastFlagsExportLauncher.launch("ClientAppSettings.json")
     }
 
     private fun setupBackButton() {
